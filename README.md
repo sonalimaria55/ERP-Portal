@@ -571,3 +571,361 @@ backend/
 ├── utils/
 ├── uploads/
 └── server.js
+# 🏭 ERP Multi-Branch Management System
+
+A production-ready ERP system for managing factory operations, branch inventory, sales terminals, and QR-based identity tracking.
+
+---
+
+## 🚀 Features
+
+- Role-based access (Super Admin, Branch Admin, Sales Terminal)
+- Multi-branch inventory management
+- QR code-based scanning system
+- Sales tracking and invoice generation
+- Dispatch workflow from factory to branches
+- Background jobs for automation
+- Secure JWT authentication
+- Production-ready architecture
+
+---
+
+## 🧱 Tech Stack
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- Redis (optional)
+- BullMQ (background jobs)
+
+### Frontend
+- React.js
+- Axios
+- QR Scanner library
+
+---
+
+## 👥 User Roles
+
+### Super Admin (Factory)
+- Manage products
+- Dispatch stock
+- View analytics
+
+### Branch Admin
+- Manage branch inventory
+- Track sales
+
+### Sales Terminal
+- Scan QR codes
+- Process sales
+
+---
+
+## 📦 Core Modules
+
+- Authentication System
+- Inventory Management
+- Sales System
+- Dispatch System
+- QR Identity System
+- Reporting Module
+
+---
+
+## 🔐 Security
+
+- JWT-based authentication
+- Role-based authorization
+- Password hashing (bcrypt)
+- Helmet security middleware
+- Input validation
+
+---
+
+## 📡 API Endpoints
+```/api/auth
+/api/users
+/api/products
+/api/inventory
+/api/sales
+/api/branches
+/api/dispatch
+/api/qr ```
+
+---
+
+## 🗄️ Database Models
+
+- Users
+- Products
+- Inventory
+- Sales
+- Branches
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone Repository
+# 🏭 ERP Multi-Branch Management System
+
+A production-ready, role-based ERP system designed for managing factory operations, multi-branch inventory, sales terminals, and QR-based identity tracking.
+
+This system enables a central factory (Super Admin) to manage products, dispatch stock to branches, monitor sales, and control operations across multiple locations in real time.
+
+---
+
+## 🚀 Overview
+
+The ERP system is built for real-world enterprise operations where:
+
+- A factory controls all inventory
+- Multiple branches receive and sell stock
+- Sales terminals handle QR-based transactions
+- All data is tracked in real time with secure authentication
+
+It is designed with scalability, security, and production deployment in mind.
+
+---
+
+## 🧱 Tech Stack
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- bcrypt (password hashing)
+- Helmet (security headers)
+- Morgan (logging)
+- dotenv (environment variables)
+- Redis (optional caching & queues)
+- BullMQ / node-cron (background jobs)
+
+### Frontend
+- React.js
+- Axios
+- QR Scanner library
+- Context API / Redux (optional)
+
+### DevOps (Recommended)
+- Docker
+- PM2 (process manager)
+- Nginx (reverse proxy)
+- MongoDB Atlas
+- Redis Cloud / Upstash
+
+---
+
+## 👥 User Roles
+
+### 🏭 Super Admin (Factory Officer)
+- Manage products
+- Create/update branches
+- Dispatch inventory to branches
+- View analytics across all branches
+- Monitor system-wide sales
+
+### 🏢 Branch Admin
+- Manage branch inventory
+- View stock levels
+- Manage sales team
+- Generate branch reports
+- Request stock from factory
+
+### 💳 Sales Terminal User
+- Scan QR codes (products/users/branches)
+- Create sales transactions
+- Generate invoices
+- Limited access to system data
+
+---
+
+## 📦 Core Modules
+
+### 🔐 Authentication Module
+- JWT-based authentication
+- Role-based access control (RBAC)
+- Password encryption using bcrypt
+- Protected routes middleware
+
+---
+
+### 📦 Inventory Module
+- Branch-wise stock tracking
+- Reserved quantity handling
+- Auto-calculated available stock
+- Low stock alerts
+
+---
+
+### 📦 Product Module
+- Product creation & management
+- SKU tracking
+- Category handling
+- Price management
+
+---
+
+### 💰 Sales Module
+- Sales transaction handling
+- Auto stock deduction
+- Invoice generation
+- Sales history tracking
+
+---
+
+### 🚚 Dispatch Module
+- Factory → Branch stock transfer
+- Dispatch approval workflow
+- Stock movement tracking
+- Inventory auto-update
+
+---
+
+### 🏢 Branch Module
+- Branch creation & management
+- Assign branch admins
+- Location tracking
+
+---
+
+### 📲 QR Code System
+
+Each QR contains:
+
+- Entity type (product / user / branch)
+- Unique ID
+- Secure signed token
+
+Example:
+```json
+{
+  "type": "product",
+  "id": "12345",
+  "token": "secure_signed_token"
+}On scan:
+
+Validate token
+Fetch entity data
+Return minimal secure response
+⚙️ Background Jobs
+
+Used for automation in production:
+
+Inventory synchronization
+Low stock alerts
+Daily sales reports
+Dispatch status updates
+QR cache optimization
+
+Recommended:
+
+BullMQ + Redis
+
+/api/auth
+/api/users
+/api/products
+/api/inventory
+/api/sales
+/api/branches
+/api/dispatch
+/api/qr
+🗄️ Database Models
+Users
+name
+email
+password
+role (superadmin | branchadmin | sales)
+branchId
+qrId
+Products
+name
+sku
+category
+price
+description
+Inventory
+productId
+branchId
+quantity
+reservedQuantity
+availableQuantity
+Sales
+productId
+branchId
+quantity
+totalPrice
+soldBy
+timestamp
+Branches
+name
+location
+adminId
+Dispatch
+productId
+fromBranch
+toBranch
+quantity
+status (pending | approved | completed)
+🔐 Security Features
+JWT authentication
+Role-based authorization
+Password hashing (bcrypt)
+Helmet security headers
+Rate limiting
+Input validation (Joi/Zod)
+Secure QR token validation
+⚙️ Setup Instructions
+1. Clone Repository
+git clone <repository-url>
+cd erp-system
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+NODE_ENV=development
+📊 System Highlights
+Multi-branch ERP architecture
+Factory-controlled inventory system
+QR-based scanning system
+Role-based dashboards
+Real-time stock tracking
+Secure authentication layer
+Scalable backend design
+Production-ready structure
+🚀 Future Enhancements
+Real-time WebSocket updates
+AI demand forecasting
+Offline POS mode
+Mobile app (React Native)
+Advanced analytics dashboard
+Automated supply chain optimization
+Barcode + QR hybrid system
+📌 Project Status
+
+🚧 Active Development (MVP Stage)
+
+🧠 Developer Notes
+Always validate stock before sales/dispatch
+Use atomic updates for inventory
+Use transactions for critical operations
+Cache QR lookups for performance
+Separate controllers and services for scalability
+📄 License
+
+This project is for educational and enterprise development purposes. Modify and extend freely.
+
+---
+
+If you want next step, I can build for you:
+
+- 🔥 Full backend folder structure (industry standard clean architecture)
+- ⚙️ Auth system (JWT + RBAC full working code)
+- 📦 Inventory + dispatch logic (bug-free production version)
+- 📲 QR system (scan → decode → secure fetch API)
+- 🧠 Complete DB models (Mongoose production schemas)
+
+Just tell me 👍
