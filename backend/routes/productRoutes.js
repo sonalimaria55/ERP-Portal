@@ -1,27 +1,51 @@
 const express = require("express");
 
-const {
-  createProduct,
-  getAllProducts,
-  getProductById,
-  updateProduct,
-  deleteProduct,
-} = require("../controllers/productController");
+const router = express.Router();
+
+const productController = require("../controllers/productController");
 
 const {
   protect,
   authorize,
 } = require("../middleware/authMiddleware");
 
-const router = express.Router();
+// Create Product
+router.post(
+  "/",
+  protect,
+  authorize("super_admin", "branch_admin"),
+  productController.createProduct
+);
 
-// Super Admin
-router.post("/", protect, authorize("super_admin"), createProduct);
-router.put("/:id", protect, authorize("super_admin"), updateProduct);
-router.delete("/:id", protect, authorize("super_admin"), deleteProduct);
+// Get All Products
+router.get(
+  "/",
+  protect,
+  productController.getAllProducts
+);
 
-// Logged In Users
-router.get("/", protect, getAllProducts);
-router.get("/:id", protect, getProductById);
+// Get Product By Id
+router.get(
+  "/:id",
+  protect,
+  productController.getProductById
+);
+
+// Update Product
+router.put(
+  "/:id",
+  protect,
+  authorize("super_admin", "branch_admin"),
+  productController.updateProduct
+);
+
+// Delete Product
+router.delete(
+  "/:id",
+  protect,
+  authorize("super_admin", "branch_admin"),
+  
+  productController.deleteProduct
+);
 
 module.exports = router;

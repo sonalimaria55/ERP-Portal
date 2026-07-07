@@ -8,20 +8,21 @@ const {
   deleteCategory,
 } = require("../controllers/categoryController");
 
-const {
-  protect,
-  authorize,
-} = require("../middleware/authMiddleware");
-
 const router = express.Router();
 
-// Super Admin Only
-router.post("/", protect, authorize("super_admin"), createCategory);
-router.put("/:id", protect, authorize("super_admin"), updateCategory);
-router.delete("/:id", protect, authorize("super_admin"), deleteCategory);
+// Create Category
+router.post("/", createCategory);
 
-// Logged-in Users
-router.get("/", protect, getAllCategories);
-router.get("/:id", protect, getCategoryById);
+// Get All Categories
+router.get("/", getAllCategories);
+
+// Get Category By ID
+router.get("/:id", getCategoryById);
+
+// Update Category
+router.put("/:id", updateCategory);
+
+// Delete Category
+router.delete("/:id", deleteCategory);
 
 module.exports = router;

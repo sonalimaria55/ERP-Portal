@@ -56,7 +56,8 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
@@ -74,6 +75,7 @@ const menu = [
     items: [
       {
         name: "Dashboard",
+        path: "/app",
         icon: <DashboardOutlinedIcon />,
       },
     ],
@@ -84,6 +86,7 @@ const menu = [
     items: [
       {
         name: "Inventory",
+         path: "/app/inventory",
         icon: <Inventory2OutlinedIcon />,
       },
       {
@@ -100,6 +103,7 @@ const menu = [
       },
       {
         name: "Sales",
+        path:"/app/sales",
         icon: <PointOfSaleOutlinedIcon />,
       },
     ],

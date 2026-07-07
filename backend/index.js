@@ -18,7 +18,7 @@ const inventoryRoutes = require("./routes/inventoryRoutes");
 const errorHandler = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const dispatchRoutes = require("./routes/dispatchRoutes");
-
+const dashboardRoutes =require("./routes/dashboardRoutes");
 // Load environment variables
 dotenv.config();
 
@@ -67,7 +67,10 @@ app.use("/api/inventory", inventoryRoutes);
 
 
 app.use("/api/dispatches", dispatchRoutes);
-
+app.use(
+    "/api/dashboard",
+    dashboardRoutes
+);
 // ===============================
 // 404 Handler
 // ===============================
