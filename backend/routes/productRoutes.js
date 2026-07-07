@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const productController = require("../controllers/productController");
+const upload = require("../middleware/multer");
 
 const {
   protect,
@@ -14,6 +15,7 @@ router.post(
   "/",
   protect,
   authorize("super_admin", "branch_admin"),
+  upload.single("image"),
   productController.createProduct
 );
 
@@ -22,6 +24,23 @@ router.get(
   "/",
   protect,
   productController.getAllProducts
+);
+
+// Upload Product Image
+router.post(
+  "/:id/images",
+  protect,
+  authorize("super_admin", "branch_admin"),
+  upload.single("image"),
+  productController.uploadImage
+);
+
+// Delete Product Image
+router.delete(
+  "/:id/images/:imageId",
+  protect,
+  authorize("super_admin", "branch_admin"),
+  productController.deleteImage
 );
 
 // Get Product By Id
@@ -43,8 +62,7 @@ router.put(
 router.delete(
   "/:id",
   protect,
-  authorize("super_admin", "branch_admin"),
-  
+ authorize("super_admin", "branch_admin"),
   productController.deleteProduct
 );
 

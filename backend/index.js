@@ -1,11 +1,10 @@
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const express = require("express");
 const cors = require("cors");
 const compression = require("compression");
-
-const dotenv = require("dotenv");
-
-
-
 
 const connectDB = require("./config/db");
 
@@ -18,9 +17,9 @@ const inventoryRoutes = require("./routes/inventoryRoutes");
 const errorHandler = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const dispatchRoutes = require("./routes/dispatchRoutes");
-const dashboardRoutes =require("./routes/dashboardRoutes");
-// Load environment variables
-dotenv.config();
+const dashboardRoutes = require("./routes/dashboardRoutes");
+
+
 
 // Connect Database
 connectDB();
