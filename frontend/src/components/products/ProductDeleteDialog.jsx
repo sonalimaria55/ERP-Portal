@@ -31,6 +31,10 @@ export default function ProductDeleteDialog({
           Are you sure you want to delete this product?
         </DialogContentText>
 
+        <Typography color="error" variant="body2" sx={{ mb: 2 }}>
+          This action cannot be undone.
+        </Typography>
+
         {product && (
           <Box
             sx={{
@@ -43,25 +47,22 @@ export default function ProductDeleteDialog({
             <Typography variant="subtitle2">
               Product Name
             </Typography>
-
             <Typography gutterBottom>
-              {product.name}
+              {product.name || "-"}
             </Typography>
 
             <Typography variant="subtitle2">
               SKU
             </Typography>
-
             <Typography gutterBottom>
-              {product.sku}
+              {product.sku || "-"}
             </Typography>
 
             <Typography variant="subtitle2">
               Category
             </Typography>
-
             <Typography>
-              {product.category}
+              {product.category?.name || product.category || "-"}
             </Typography>
           </Box>
         )}

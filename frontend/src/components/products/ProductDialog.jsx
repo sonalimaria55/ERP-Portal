@@ -16,27 +16,31 @@ import ProductInventoryTab from "./ProductInventoryTab";
 import ProductImageUpload from "./ProductImageUpload";
 
 const initialForm = {
-  name: "",
+  // Basic Details
+  productName: "",
   sku: "",
   barcode: "",
   category: "",
   brand: "",
-  unit: "",
+  unit: "Piece",
   description: "",
   status: "Active",
 
-  purchasePrice: "",
-  sellingPrice: "",
-  tax: "",
-  discount: "",
+  // Pricing
+  purchasePrice: 0,
+  sellingPrice: 0,
+  gst: 18,
+  discount: 0,
 
-  initialStock: "",
-  reorderLevel: "",
-  maximumStock: "",
+  // Inventory
+  initialStock: 0,
+  reorderLevel: 5,
+  maximumStock: 0,
   warehouse: "",
   trackInventory: true,
   allowNegativeStock: false,
 
+  // Images
   images: [],
 };
 
@@ -47,7 +51,9 @@ export default function ProductDialog({
   product,
 }) {
   const [tab, setTab] = useState(0);
-  const [formData, setFormData] = useState(initialForm);
+
+  const [formData, setFormData] =
+    useState(initialForm);
 
   useEffect(() => {
     if (product) {
@@ -81,13 +87,17 @@ export default function ProductDialog({
       maxWidth="lg"
     >
       <DialogTitle>
-        {product ? "Edit Product" : "Add Product"}
+        {product
+          ? "Edit Product"
+          : "Add Product"}
       </DialogTitle>
 
       <DialogContent dividers>
         <Tabs
           value={tab}
-          onChange={(e, newValue) => setTab(newValue)}
+          onChange={(e, value) =>
+            setTab(value)
+          }
         >
           <Tab label="Basic" />
           <Tab label="Pricing" />
@@ -135,7 +145,9 @@ export default function ProductDialog({
           variant="contained"
           onClick={handleSave}
         >
-          {product ? "Update Product" : "Save Product"}
+          {product
+            ? "Update Product"
+            : "Save Product"}
         </Button>
       </DialogActions>
     </Dialog>

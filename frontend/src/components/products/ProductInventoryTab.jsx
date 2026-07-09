@@ -17,7 +17,10 @@ const warehouses = [
   "Warehouse C",
 ];
 
-export default function ProductInventoryTab({ formData, onChange }) {
+export default function ProductInventoryTab({
+  formData,
+  onChange,
+}) {
   return (
     <Grid container spacing={2}>
       {/* Initial Stock */}
@@ -28,7 +31,10 @@ export default function ProductInventoryTab({ formData, onChange }) {
           label="Initial Stock"
           value={formData.initialStock}
           onChange={(e) =>
-            onChange("initialStock", e.target.value)
+            onChange(
+              "initialStock",
+              Number(e.target.value)
+            )
           }
         />
       </Grid>
@@ -41,7 +47,10 @@ export default function ProductInventoryTab({ formData, onChange }) {
           label="Reorder Level"
           value={formData.reorderLevel}
           onChange={(e) =>
-            onChange("reorderLevel", e.target.value)
+            onChange(
+              "reorderLevel",
+              Number(e.target.value)
+            )
           }
         />
       </Grid>
@@ -54,7 +63,10 @@ export default function ProductInventoryTab({ formData, onChange }) {
           label="Maximum Stock"
           value={formData.maximumStock}
           onChange={(e) =>
-            onChange("maximumStock", e.target.value)
+            onChange(
+              "maximumStock",
+              Number(e.target.value)
+            )
           }
         />
       </Grid>
@@ -63,15 +75,22 @@ export default function ProductInventoryTab({ formData, onChange }) {
       <Grid size={{ xs: 12 }}>
         <FormControl fullWidth>
           <InputLabel>Warehouse</InputLabel>
+
           <Select
             value={formData.warehouse}
             label="Warehouse"
             onChange={(e) =>
-              onChange("warehouse", e.target.value)
+              onChange(
+                "warehouse",
+                e.target.value
+              )
             }
           >
             {warehouses.map((warehouse) => (
-              <MenuItem key={warehouse} value={warehouse}>
+              <MenuItem
+                key={warehouse}
+                value={warehouse}
+              >
                 {warehouse}
               </MenuItem>
             ))}
@@ -86,7 +105,10 @@ export default function ProductInventoryTab({ formData, onChange }) {
             <Switch
               checked={formData.trackInventory}
               onChange={(e) =>
-                onChange("trackInventory", e.target.checked)
+                onChange(
+                  "trackInventory",
+                  e.target.checked
+                )
               }
             />
           }
@@ -101,7 +123,10 @@ export default function ProductInventoryTab({ formData, onChange }) {
             <Switch
               checked={formData.allowNegativeStock}
               onChange={(e) =>
-                onChange("allowNegativeStock", e.target.checked)
+                onChange(
+                  "allowNegativeStock",
+                  e.target.checked
+                )
               }
             />
           }

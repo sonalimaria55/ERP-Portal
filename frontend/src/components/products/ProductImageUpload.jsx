@@ -8,39 +8,79 @@ import {
   CardActions,
   Typography,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function ProductImageUpload({ formData, onChange }) {
+export default function ProductImageUpload({
+  formData,
+  onChange,
+}) {
+
   const handleFileChange = (event) => {
-    const files = Array.from(event.target.files || []);
 
-    const imageFiles = files.map((file) => ({
+    const files = Array.from(
+      event.target.files || []
+    );
+
+    const newImages = files.map((file) => ({
+
       file,
+
       preview: URL.createObjectURL(file),
+
       name: file.name,
+
     }));
 
-    onChange("images", [...formData.images, ...imageFiles]);
+    onChange(
+      "images",
+      [
+        ...formData.images,
+        ...newImages,
+      ]
+    );
+
   };
+
+
 
   const handleRemoveImage = (index) => {
-    const updatedImages = [...formData.images];
 
-    URL.revokeObjectURL(updatedImages[index].preview);
+    const updatedImages =
+      [...formData.images];
 
-    updatedImages.splice(index, 1);
+    const image =
+      updatedImages[index];
 
-    onChange("images", updatedImages);
+    if(image.preview){
+
+      URL.revokeObjectURL(
+        image.preview
+      );
+
+    }
+
+    updatedImages.splice(index,1);
+
+    onChange(
+      "images",
+      updatedImages
+    );
+
   };
 
+
+
   return (
+
     <Box>
+
       <Button
         component="label"
         variant="contained"
         startIcon={<UploadFileIcon />}
       >
+
         Upload Images
 
         <input
@@ -50,57 +90,100 @@ export default function ProductImageUpload({ formData, onChange }) {
           type="file"
           onChange={handleFileChange}
         />
+
       </Button>
+
 
       <Typography
         variant="body2"
         color="text.secondary"
-        sx={{ mt: 2, mb: 2 }}
+        sx={{
+          mt:2,
+          mb:2,
+        }}
       >
-        Supported formats: JPG, JPEG, PNG, WEBP
+        Supported formats:
+        JPG, JPEG, PNG, WEBP
       </Typography>
 
-      <Grid container spacing={2}>
-        {formData.images.map((image, index) => (
-          <Grid
-            key={index}
-            size={{ xs: 12, sm: 6, md: 3 }}
-          >
-            <Card>
-              <CardMedia
-                component="img"
-                height="180"
-                image={image.preview}
-                alt={image.name}
-              />
 
-              <CardActions
-                sx={{
-                  justifyContent: "space-between",
-                  px: 2,
+
+      <Grid container spacing={2}>
+
+        {formData.images.map(
+          (image,index)=>{
+
+            const imageUrl =
+              image.preview || image.url;
+
+            const imageName =
+              image.name ||
+              image.publicId ||
+              "Image";
+
+            return(
+
+              <Grid
+                key={index}
+                size={{
+                  xs:12,
+                  sm:6,
+                  md:3,
                 }}
               >
-                <Typography
-                  variant="caption"
-                  noWrap
-                  sx={{ maxWidth: 120 }}
-                >
-                  {image.name}
-                </Typography>
 
-                <Button
-                  color="error"
-                  size="small"
-                  startIcon={<DeleteIcon />}
-                  onClick={() => handleRemoveImage(index)}
-                >
-                  Remove
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+                <Card>
+
+                  <CardMedia
+                    component="img"
+                    height="180"
+                    image={imageUrl}
+                    alt={imageName}
+                  />
+
+                  <CardActions
+                    sx={{
+                      justifyContent:"space-between",
+                      px:2,
+                    }}
+                  >
+
+                    <Typography
+                      variant="caption"
+                      noWrap
+                      sx={{
+                        maxWidth:120,
+                      }}
+                    >
+                      {imageName}
+                    </Typography>
+
+                    <Button
+                      color="error"
+                      size="small"
+                      startIcon={<DeleteIcon />}
+                      onClick={()=>
+                        handleRemoveImage(index)
+                      }
+                    >
+                      Remove
+                    </Button>
+
+                  </CardActions>
+
+                </Card>
+
+              </Grid>
+
+            );
+
+          }
+        )}
+
       </Grid>
+
     </Box>
+
   );
+
 }

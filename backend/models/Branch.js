@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const branchSchema = new mongoose.Schema(
+
+
+
+
+
   {
     branchName: {
       type: String,
@@ -15,6 +20,11 @@ const branchSchema = new mongoose.Schema(
       unique: true,
       uppercase: true,
       trim: true,
+    },
+    factory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Factory",
+      required: [true, "Factory is required"],
     },
 
     manager: {

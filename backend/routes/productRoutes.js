@@ -58,6 +58,18 @@ router.put(
   productController.updateProduct
 );
 
+
+
+
+// Adjust Product Stock
+router.patch(
+  "/:id/adjust-stock",
+  protect,
+  authorize("super_admin", "branch_admin"),
+  productController.adjustStock
+);
+
+
 // Delete Product
 router.delete(
   "/:id",

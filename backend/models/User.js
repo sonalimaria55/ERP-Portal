@@ -1,3 +1,95 @@
+// const mongoose = require("mongoose");
+// const bcrypt = require("bcryptjs");
+
+// const userSchema = new mongoose.Schema(
+//   {
+//     name: {
+//       type: String,
+//       required: [true, "Name is required"],
+//       trim: true,
+//     },
+
+//     email: {
+//       type: String,
+//       required: [true, "Email is required"],
+//       unique: true,
+//       lowercase: true,
+//       trim: true,
+//     },
+
+//     phone: {
+//       type: String,
+//       required: [true, "Phone number is required"],
+//       unique: true,
+//       trim: true,
+//     },
+
+//     password: {
+//       type: String,
+//       required: [true, "Password is required"],
+//       minlength: 6,
+//       select: false,
+//     },
+
+//     // Factory
+//     factory: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "Factory",
+//       default: null,
+//     },
+
+//     // Branch
+//     branch: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "Branch",
+//       default: null,
+//     },
+
+//     // Counter
+//     counter: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "Counter",
+//       default: null,
+//     },
+
+//     // User Role
+//     role: {
+//       type: String,
+//       enum: [
+//         "super_admin",
+//         "factory_admin",
+//         "branch_admin",
+//         "sales_person",
+//       ],
+//       default: "sales_person",
+//     },
+
+//     isActive: {
+//       type: Boolean,
+//       default: true,
+//     },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
+
+// // Hash password before saving
+// userSchema.pre("save", async function () {
+//   if (!this.isModified("password")) {
+//     return;
+//   }
+
+//   const salt = await bcrypt.genSalt(10);
+//   this.password = await bcrypt.hash(this.password, salt);
+// });
+
+// // Compare password
+// userSchema.methods.comparePassword = async function (enteredPassword) {
+//   return await bcrypt.compare(enteredPassword, this.password);
+// };
+
+// module.exports = mongoose.model("User", userSchema);
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
@@ -30,15 +122,43 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       select: false,
     },
+
+    // Factory
+    factory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Factory",
+      default: null,
+    },
+
+    // Branch
     branch: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Branch",
-      default: null
+      default: null,
     },
 
+    // Counter
+    counter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Counter",
+      default: null,
+    },
+
+    // User Role
     role: {
       type: String,
-      enum: ["super_admin", "branch_admin", "sales_person"],
+      enum: [
+        "super_admin",
+        "factory_admin",
+        "branch_admin",
+        "warehouse_manager",
+        "purchase_manager",
+        "sales_person",
+        "online_manager",
+        "accounts_manager",
+        "delivery_manager",
+        "customer_support",
+      ],
       default: "sales_person",
     },
 
@@ -54,9 +174,7 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) {
-    return;
-  }
+  if (!this.isModified("password")) return;
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
@@ -64,7 +182,7 @@ userSchema.pre("save", async function () {
 
 // Compare password
 userSchema.methods.comparePassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  return bcrypt.compare(enteredPassword, this.password);
 };
 
 module.exports = mongoose.model("User", userSchema);

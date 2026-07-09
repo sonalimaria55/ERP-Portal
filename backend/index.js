@@ -18,9 +18,9 @@ const errorHandler = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const dispatchRoutes = require("./routes/dispatchRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
-
-
-
+const stockTransactionRoutes = require("./routes/stockTransactionRoutes");
+const factoryRoutes = require("./routes/factoryRoutes");
+const counterRoutes = require("./routes/counterRoutes");
 // Connect Database
 connectDB();
 
@@ -64,12 +64,13 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/inventory", inventoryRoutes);
 
-
+app.use("/api/stock-transactions",stockTransactionRoutes);
 app.use("/api/dispatches", dispatchRoutes);
-app.use(
-    "/api/dashboard",
-    dashboardRoutes
-);
+app.use("/api/dashboard",dashboardRoutes);
+
+app.use("/api/factories", factoryRoutes);
+app.use("/api/counters", counterRoutes);
+
 // ===============================
 // 404 Handler
 // ===============================

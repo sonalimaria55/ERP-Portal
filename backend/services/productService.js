@@ -1,5 +1,5 @@
 
-
+const stockTransactionService = require("./stockTransactionService");
 
 const Product = require("../models/Product");
 
@@ -83,17 +83,33 @@ const createProduct = async (productData, userId) => {
     const productCode = await generateProductCode();
 
     // Create Product
-    const product = await Product.create({
-        ...productData,
+    
+const product = await Product.create({
+  ...productData,
+  productCode,
+  sku: productData.sku.toUpperCase(),
 
-        productCode,
+  // Current stock starts with the opening stock
+  currentStock: productData.initialStock || 0,
 
-        sku: productData.sku.toUpperCase(),
+  createdBy: userId,
+});
 
-        createdBy: userId,
-    });
+// Create Opening Stock Transaction
+if (product.initialStock > 0) {
+  await stockTransactionService.createTransaction({
+    product: product._id,
+    transactionType: "OPENING_STOCK",
+    quantity: product.initialStock,
+    balanceAfter: product.initialStock,
+    referenceType: "PRODUCT",
+    remarks: "Opening stock during product creation",
+    createdBy: userId,
+  });
+}
 
-    return product;
+return product;
+
 };
 /**
  * Get All Products
@@ -143,11 +159,15 @@ const getAllProducts = async (query) => {
         filter.status = status;
     }
 
+    if (query.category) {
+        filter.category = query.category;
+    }
+
     const totalProducts = await Product.countDocuments(filter);
 
     const products = await Product.find(filter)
         .populate("category", "categoryName")
-    
+
         .populate("createdBy", "name email")
         .sort({
             createdAt: -1,
@@ -176,7 +196,7 @@ const getProductById = async (productId) => {
         isDeleted: false,
     })
         .populate("category", "categoryName")
-      
+
         .populate("createdBy", "name email")
         .populate("updatedBy", "name email");
 
@@ -238,12 +258,67 @@ const updateProduct = async (productId, productData, userId) => {
         }
     )
         .populate("category", "categoryName")
-    
+
         .populate("createdBy", "name email")
         .populate("updatedBy", "name email");
 
     return updatedProduct;
 };
+
+/**
+ * Adjust Product Stock
+ */
+const adjustStock = async (
+  productId,
+  quantity,
+  remarks,
+  userId
+) => {
+  const product = await Product.findOne({
+    _id: productId,
+    isDeleted: false,
+  });
+
+  if (!product) {
+    throw new Error("Product not found");
+  }
+
+
+  if (isNaN(quantity) || Number(quantity) === 0) {
+  throw new Error("Quantity must be a non-zero number");
+}
+
+  const newStock = product.currentStock + Number(quantity);
+
+  if (
+    newStock < 0 &&
+    !product.allowNegativeStock
+  ) {
+    throw new Error("Insufficient stock");
+  }
+
+  product.currentStock = newStock;
+  product.updatedBy = userId;
+
+  await product.save();
+
+  await stockTransactionService.createTransaction({
+    product: product._id,
+    transactionType: "ADJUSTMENT",
+    quantity: Number(quantity),
+    balanceAfter: newStock,
+    referenceType: "MANUAL",
+    remarks,
+    createdBy: userId,
+  });
+
+  return product;
+};
+
+
+
+
+
 
 /**
  * Delete Product (Soft Delete)
@@ -273,5 +348,6 @@ module.exports = {
     getAllProducts,
     getProductById,
     updateProduct,
+    adjustStock,
     deleteProduct,
 };

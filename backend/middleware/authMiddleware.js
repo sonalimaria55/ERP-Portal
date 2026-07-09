@@ -20,16 +20,25 @@ const protect = async (req, res, next) => {
       });
     }
 
-
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = await User.findById(decoded.id).select("-password");
+    req.user = await User.findById(decoded.id)
+      .select("-password")
+      .populate("factory", "factoryName factoryCode")
+      .populate("branch", "branchName branchCode")
+      .populate("counter", "counterName counterCode");
 
     if (!req.user) {
       return res.status(401).json({
         success: false,
         message: "User not found.",
+      });
+    }
+
+    if (!req.user.isActive) {
+      return res.status(401).json({
+        success: false,
+        message: "Your account has been deactivated.",
       });
     }
 

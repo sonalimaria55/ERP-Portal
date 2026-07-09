@@ -53,12 +53,34 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./app/store";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+import theme from "./theme/theme";
+
+
+ReactDOM.createRoot(
+  document.getElementById("root")
+).render(
+
   <React.StrictMode>
+
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+
+      <ThemeProvider theme={theme}>
+
+        <CssBaseline />
+
+        <BrowserRouter>
+
+          <App />
+
+        </BrowserRouter>
+
+      </ThemeProvider>
+
     </Provider>
+
   </React.StrictMode>
+
 );

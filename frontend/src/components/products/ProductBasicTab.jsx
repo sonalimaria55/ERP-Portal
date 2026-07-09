@@ -37,7 +37,10 @@ const statusOptions = [
   "Inactive",
 ];
 
-export default function ProductBasicTab({ formData, onChange }) {
+export default function ProductBasicTab({
+  formData,
+  onChange,
+}) {
   return (
     <Grid container spacing={2}>
       {/* Product Name */}
@@ -46,8 +49,10 @@ export default function ProductBasicTab({ formData, onChange }) {
           fullWidth
           required
           label="Product Name"
-          value={formData.name}
-          onChange={(e) => onChange("name", e.target.value)}
+          value={formData.productName}
+          onChange={(e) =>
+            onChange("productName", e.target.value)
+          }
         />
       </Grid>
 
@@ -58,7 +63,9 @@ export default function ProductBasicTab({ formData, onChange }) {
           required
           label="SKU"
           value={formData.sku}
-          onChange={(e) => onChange("sku", e.target.value)}
+          onChange={(e) =>
+            onChange("sku", e.target.value)
+          }
         />
       </Grid>
 
@@ -68,7 +75,9 @@ export default function ProductBasicTab({ formData, onChange }) {
           fullWidth
           label="Barcode"
           value={formData.barcode}
-          onChange={(e) => onChange("barcode", e.target.value)}
+          onChange={(e) =>
+            onChange("barcode", e.target.value)
+          }
         />
       </Grid>
 
@@ -76,13 +85,19 @@ export default function ProductBasicTab({ formData, onChange }) {
       <Grid size={{ xs: 12, md: 6 }}>
         <FormControl fullWidth>
           <InputLabel>Category</InputLabel>
+
           <Select
             value={formData.category}
             label="Category"
-            onChange={(e) => onChange("category", e.target.value)}
+            onChange={(e) =>
+              onChange("category", e.target.value)
+            }
           >
             {categories.map((category) => (
-              <MenuItem key={category} value={category}>
+              <MenuItem
+                key={category}
+                value={category}
+              >
                 {category}
               </MenuItem>
             ))}
@@ -94,13 +109,19 @@ export default function ProductBasicTab({ formData, onChange }) {
       <Grid size={{ xs: 12, md: 6 }}>
         <FormControl fullWidth>
           <InputLabel>Brand</InputLabel>
+
           <Select
             value={formData.brand}
             label="Brand"
-            onChange={(e) => onChange("brand", e.target.value)}
+            onChange={(e) =>
+              onChange("brand", e.target.value)
+            }
           >
             {brands.map((brand) => (
-              <MenuItem key={brand} value={brand}>
+              <MenuItem
+                key={brand}
+                value={brand}
+              >
                 {brand}
               </MenuItem>
             ))}
@@ -112,13 +133,19 @@ export default function ProductBasicTab({ formData, onChange }) {
       <Grid size={{ xs: 12, md: 6 }}>
         <FormControl fullWidth>
           <InputLabel>Unit</InputLabel>
+
           <Select
             value={formData.unit}
             label="Unit"
-            onChange={(e) => onChange("unit", e.target.value)}
+            onChange={(e) =>
+              onChange("unit", e.target.value)
+            }
           >
             {units.map((unit) => (
-              <MenuItem key={unit} value={unit}>
+              <MenuItem
+                key={unit}
+                value={unit}
+              >
                 {unit}
               </MenuItem>
             ))}
@@ -130,13 +157,19 @@ export default function ProductBasicTab({ formData, onChange }) {
       <Grid size={{ xs: 12, md: 6 }}>
         <FormControl fullWidth>
           <InputLabel>Status</InputLabel>
+
           <Select
             value={formData.status}
             label="Status"
-            onChange={(e) => onChange("status", e.target.value)}
+            onChange={(e) =>
+              onChange("status", e.target.value)
+            }
           >
             {statusOptions.map((status) => (
-              <MenuItem key={status} value={status}>
+              <MenuItem
+                key={status}
+                value={status}
+              >
                 {status}
               </MenuItem>
             ))}
@@ -152,7 +185,9 @@ export default function ProductBasicTab({ formData, onChange }) {
           rows={4}
           label="Description"
           value={formData.description}
-          onChange={(e) => onChange("description", e.target.value)}
+          onChange={(e) =>
+            onChange("description", e.target.value)
+          }
         />
       </Grid>
     </Grid>

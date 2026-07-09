@@ -2,9 +2,21 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 // Generate JWT
-const generateToken = (id, role, branch) => {
+const generateToken = (
+  id,
+  role,
+  factory,
+  branch,
+  counter
+) => {
   return jwt.sign(
-    { id, role, branch },
+    {
+      id,
+      role,
+      factory,
+      branch,
+      counter,
+    },
     process.env.JWT_SECRET,
     {
       expiresIn: "7d",
@@ -15,7 +27,16 @@ const generateToken = (id, role, branch) => {
 // Register User
 const registerUser = async (req, res) => {
   try {
-    const { name, email, phone, password, role, branch } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      password,
+      role,
+      factory,
+      branch,
+      counter,
+    } = req.body;
 
     // Check existing email
     const emailExists = await User.findOne({ email });
@@ -43,20 +64,30 @@ const registerUser = async (req, res) => {
       phone,
       password,
       role,
+      factory,
       branch,
+      counter,
     });
 
     res.status(201).json({
       success: true,
       message: "User registered successfully",
-      token: generateToken(user._id, user.role, user.branch),
+      token: generateToken(
+        user._id,
+        user.role,
+        user.factory,
+        user.branch,
+        user.counter
+      ),
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,
         role: user.role,
+        factory: user.factory,
         branch: user.branch,
+        counter: user.counter,
       },
     });
   } catch (error) {
@@ -72,7 +103,11 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email })
+      .select("+password")
+      .populate("factory", "factoryName factoryCode")
+      .populate("branch", "branchName branchCode")
+      .populate("counter", "counterName counterCode");
 
     if (!user) {
       return res.status(401).json({
@@ -93,14 +128,22 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Login successful",
-      token: generateToken(user._id, user.role, user.branch),
+      token: generateToken(
+        user._id,
+        user.role,
+        user.factory?._id,
+        user.branch?._id,
+        user.counter?._id
+      ),
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,
         role: user.role,
+        factory: user.factory,
         branch: user.branch,
+        counter: user.counter,
       },
     });
   } catch (error) {
@@ -118,15 +161,14 @@ const getProfile = async (req, res) => {
     user: req.user,
   });
 };
+
 // Change Password
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
-    // Get user with password
     const user = await User.findById(req.user._id).select("+password");
 
-    // Check current password
     const isMatch = await user.comparePassword(currentPassword);
 
     if (!isMatch) {
@@ -136,7 +178,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // Update password
     user.password = newPassword;
 
     await user.save();
@@ -152,6 +193,7 @@ const changePassword = async (req, res) => {
     });
   }
 };
+
 module.exports = {
   registerUser,
   loginUser,
