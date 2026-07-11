@@ -77,7 +77,8 @@ const DataTable = ({
 
         <TableBody>
 
-          {rows.map((row) => (
+          {(rows || []).map((row) => (
+            
 
             <TableRow
               key={row._id}

@@ -1,3 +1,67 @@
+// const express = require("express");
+
+// const router = express.Router();
+
+// const {
+//   createCounter,
+//   getAllCounters,
+//   getCounterById,
+//   getCountersByBranch,
+//   updateCounter,
+//   deleteCounter,
+// } = require("../controllers/counterController");
+
+// const {
+//   protect,
+//   authorize,
+// } = require("../middleware/authMiddleware");
+
+// // Super Admin & Factory Admin can manage counters
+
+// router.post(
+//   "/",
+//   protect,
+//   authorize("super_admin", "factory_admin"),
+//   createCounter
+// );
+
+// router.get(
+//   "/",
+//   protect,
+//   authorize("super_admin", "factory_admin", "branch_admin"),
+//   getAllCounters
+// );
+
+
+
+// router.get(
+//   "/:id",
+//   protect,
+//   authorize("super_admin", "factory_admin", "branch_admin"),
+//   getCounterById
+// );
+
+// router.put(
+//   "/:id",
+//   protect,
+//   authorize("super_admin", "factory_admin"),
+//   updateCounter
+// );
+
+// router.delete(
+//   "/:id",
+//   protect,
+//   authorize("super_admin", "factory_admin"),
+//   deleteCounter
+// );
+
+
+// router.get("/branch/:branchId",protect,getCountersByBranch
+// );
+
+
+// module.exports = router;
+
 const express = require("express");
 
 const router = express.Router();
@@ -6,6 +70,7 @@ const {
   createCounter,
   getAllCounters,
   getCounterById,
+  getCountersByBranch,
   updateCounter,
   deleteCounter,
 } = require("../controllers/counterController");
@@ -15,8 +80,7 @@ const {
   authorize,
 } = require("../middleware/authMiddleware");
 
-// Super Admin & Factory Admin can manage counters
-
+// Create Counter
 router.post(
   "/",
   protect,
@@ -24,6 +88,7 @@ router.post(
   createCounter
 );
 
+// Get All Counters
 router.get(
   "/",
   protect,
@@ -31,6 +96,14 @@ router.get(
   getAllCounters
 );
 
+// Get Counters By Branch
+router.get(
+  "/branch/:branchId",
+  protect,
+  getCountersByBranch
+);
+
+// Get Counter By Id
 router.get(
   "/:id",
   protect,
@@ -38,6 +111,7 @@ router.get(
   getCounterById
 );
 
+// Update Counter
 router.put(
   "/:id",
   protect,
@@ -45,6 +119,7 @@ router.put(
   updateCounter
 );
 
+// Delete Counter
 router.delete(
   "/:id",
   protect,

@@ -1,122 +1,177 @@
-// import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-// import { useDispatch, useSelector } from "react-redux";
+import {
+  Button,
+  Paper,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 
-// import {
-//     Box,
-//     Paper,
-// } from "@mui/material";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 
-
-// import PageHeader from "../../components/common/PageHeader";
-
-// import UserToolbar from "../../components/users/UserToolbar";
-// import UserTable from "../../components/users/UserTable";
-// import UserDialog from "../../components/users/UserDialog";
-// import UserDeleteDialog from "../../components/users/UserDeleteDialog";
-// import PageContainer from "../../components/common/PageContainer";
-
-// import { fetchUsers, toggleUserStatus, } from "../../features/user/userThunk";
-
-// const UserManagement = () => {
-//     const dispatch = useDispatch();
-
-//     const { users, loading } = useSelector(
-//         (state) => state.user
-//     );
-
-//     const [search, setSearch] = useState("");
-
-//     const [openDialog, setOpenDialog] = useState(false);
-
-//     const [openDelete, setOpenDelete] = useState(false);
-
-//     const [selectedUser, setSelectedUser] = useState(null);
-
-//     const handleStatus = async (user) => {
-//         await dispatch(toggleUserStatus(user._id));
-//         dispatch(fetchUsers());
-//     };
-//     useEffect(() => {
-//          console.log("Fetching users...");
-//         dispatch(fetchUsers());
-//     }, [dispatch]);
-
-// //     useEffect(() => {
-// //   console.log("Fetching users...");
-// //   dispatch(fetchUsers());
-// // }, [dispatch]);
-
-//     const handleAdd = () => {
-//         setSelectedUser(null);
-//         setOpenDialog(true);
-//     };
-
-//     const handleEdit = (user) => {
-//         setSelectedUser(user);
-//         setOpenDialog(true);
-//     };
-
-//     const handleDelete = (user) => {
-//         setSelectedUser(user);
-//         setOpenDelete(true);
-//     };
-
-//     return (
-//         <PageContainer>
-//             <PageHeader
-//                 title="User Management"
-//                 subtitle="Manage ERP Users"
-//             />
-
-//             <Paper sx={{ p: 2 }}>
-
-//                 <UserToolbar
-//                     search={search}
-//                     setSearch={setSearch}
-//                     onAdd={handleAdd}
-//                 />
-
-//                 <Box mt={2}>
-
-//                     <UserTable
-//                         users={users}
-//                         loading={loading}
-//                         search={search}
-//                         onEdit={handleEdit}
-//                         onDelete={handleDelete}
-//                         onStatus={handleStatus}
-//                     />
-
-//                 </Box>
-//             </Paper>
-
-//             <UserDialog
-//                 open={openDialog}
-//                 onClose={() => setOpenDialog(false)}
-//                 user={selectedUser}
-//             />
-
-//             <UserDeleteDialog
-//                 open={openDelete}
-//                 onClose={() => setOpenDelete(false)}
-//                 user={selectedUser}
-//             />
-//         </PageContainer>
-//     );
-// };
-
-// export default UserManagement;
-
-
-import React from "react";
-
-import { Paper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageContainer from "../../components/common/PageContainer";
 import PageHeader from "../../components/common/PageHeader";
+import DataTable from "../../components/common/DataTable";
+
+import UserFormDialog from "../../components/users/UserFormDialog";
+
+import {
+  fetchUsers,
+  createNewUser,
+  updateExistingUser,
+  toggleUserStatus,
+  removeUser,
+} from "../../features/user/userThunk";
 
 function Users() {
+  const dispatch = useDispatch();
+
+  const {
+    users = [],
+    loading,
+  } = useSelector((state) => state.user);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const handleAddUser = () => {
+    setSelectedUser(null);
+    setOpenDialog(true);
+  };
+
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setOpenDialog(true);
+  };
+
+  const handleSave = async (data) => {
+    if (selectedUser) {
+      await dispatch(
+        updateExistingUser({
+          id: selectedUser._id,
+          data,
+        })
+      );
+    } else {
+      await dispatch(createNewUser(data));
+    }
+
+    await dispatch(fetchUsers());
+
+    setOpenDialog(false);
+    setSelectedUser(null);
+  };
+
+  const handleStatus = async (user) => {
+    await dispatch(toggleUserStatus(user._id));
+    await dispatch(fetchUsers());
+  };
+
+  const handleDelete = async (user) => {
+    const confirmDelete = window.confirm(
+      `Delete ${user.name}?`
+    );
+
+    if (!confirmDelete) return;
+
+    await dispatch(removeUser(user._id));
+    await dispatch(fetchUsers());
+  };
+
+
+
+
+
+
+    const columns = [
+    {
+      field: "name",
+      header: "Name",
+    },
+    {
+      field: "email",
+      header: "Email",
+    },
+    {
+      field: "phone",
+      header: "Phone",
+    },
+    {
+      field: "role",
+      header: "Role",
+    },
+    {
+      field: "isActive",
+      header: "Status",
+    },
+  ];
+
+  const rows = (users || []).map((user) => ({
+    ...user,
+
+    role: user.role
+      ?.replaceAll("_", " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase()),
+
+    isActive: user.isActive
+      ? "Active"
+      : "Inactive",
+  }));
+
+  const renderActions = (row) => {
+    const originalUser = users.find(
+      (user) => user._id === row._id
+    );
+
+    if (!originalUser) return null;
+
+    return (
+      <>
+        <Tooltip title="Edit">
+          <IconButton
+            size="small"
+            onClick={() => handleEdit(originalUser)}
+          >
+            <EditOutlinedIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip
+          title={
+            originalUser.isActive
+              ? "Deactivate"
+              : "Activate"
+          }
+        >
+          <IconButton
+            size="small"
+            onClick={() => handleStatus(originalUser)}
+          >
+            <AutorenewOutlinedIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Delete">
+          <IconButton
+            size="small"
+            color="error"
+            onClick={() => handleDelete(originalUser)}
+          >
+            <DeleteOutlineOutlinedIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      </>
+    );
+  };
+
   return (
     <PageContainer>
       <PageHeader
@@ -124,9 +179,36 @@ function Users() {
         subtitle="Manage ERP Users"
       />
 
-      <Paper sx={{ p: 2 }}>
-        Hello
+      <Paper
+        sx={{
+          p: 2,
+          borderRadius: 3,
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{ mb: 2 }}
+          onClick={handleAddUser}
+        >
+          + Add User
+        </Button>
+
+        <DataTable
+          columns={columns}
+          rows={rows}
+          renderActions={renderActions}
+        />
       </Paper>
+
+      <UserFormDialog
+        open={openDialog}
+        user={selectedUser}
+        onClose={() => {
+          setOpenDialog(false);
+          setSelectedUser(null);
+        }}
+        onSave={handleSave}
+      />
     </PageContainer>
   );
 }

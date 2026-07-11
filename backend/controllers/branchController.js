@@ -187,12 +187,13 @@ const createBranch = async (req, res) => {
   try {
     const {
        factory,
-      branchName,
-      branchCode,
-      manager,
-      email,
-      phone,
-      address,
+       branchName,
+        branchCode,
+         manager,
+         email,
+         phone,
+         address,
+   
 
       city,
       state,
@@ -353,10 +354,35 @@ const deleteBranch = async (req, res) => {
     });
   }
 };
+// Get Branches By Factory
+// Get Branches By Factory
+const getBranchesByFactory = async (req, res) => {
+  try {
 
+    const branches = await Branch.find({
+      factory: req.params.factoryId,
+      isActive: true,
+    }).sort({ branchName: 1 });
+
+    res.status(200).json({
+      success: true,
+      count: branches.length,
+      branches,
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+};
 module.exports = {
   createBranch,
   getAllBranches,
+  getBranchesByFactory,
   getBranchById,
   updateBranch,
   deleteBranch,

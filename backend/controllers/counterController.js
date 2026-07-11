@@ -84,6 +84,32 @@ const getAllCounters = async (req, res) => {
   }
 };
 
+// Get Counters By Branch
+const getCountersByBranch = async (req, res) => {
+  try {
+    const counters = await Counter.find({
+      branch: req.params.branchId,
+      isActive: true,
+    })
+      .populate("factory", "factoryName factoryCode")
+      .populate("branch", "branchName branchCode")
+      .sort({ counterName: 1 });
+
+    res.status(200).json({
+      success: true,
+      count: counters.length,
+      counters,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
 // Get Counter By ID
 const getCounterById = async (req, res) => {
   try {
@@ -171,6 +197,7 @@ const deleteCounter = async (req, res) => {
 module.exports = {
   createCounter,
   getAllCounters,
+  getCountersByBranch,
   getCounterById,
   updateCounter,
   deleteCounter,

@@ -119,3 +119,10 @@ export const {
 } = factorySlice.actions;
 
 export default factorySlice.reducer;
+
+
+
+//future enhancement
+// state.factories = state.factories.filter(
+//   f => f._id !== action.payload
+// );

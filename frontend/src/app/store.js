@@ -1,4 +1,3 @@
-
 import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "../features/auth/authSlice";
@@ -7,24 +6,28 @@ import categoryReducer from "../features/category/categorySlice";
 import productReducer from "../features/products/productSlice";
 
 import userReducer from "../features/user/userSlice";
+
 import factoryReducer from "../features/factory/factorySlice";
-
+import branchReducer from "../features/branch/branchSlice";
+import counterReducer from "../features/counter/counterSlice";
+import employeeReducer from "../features/employee/employeeSlice";
 export const store = configureStore({
+  reducer: {
+    auth: authReducer,
 
-    reducer: {
+    dashboard: dashboardReducer,
 
-        auth: authReducer,
+    category: categoryReducer,
+    product: productReducer,
 
-        dashboard: dashboardReducer,
-        category: categoryReducer,
-        product: productReducer,
-           user: userReducer,
-              factory: factoryReducer,
+    user: userReducer,
 
-    },
-
+    factory: factoryReducer,
+    branch: branchReducer,
+    counter: counterReducer,
+     employee: employeeReducer,
+  },
 });
-
 
 // reducer: {
 //   auth: authReducer,

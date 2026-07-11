@@ -1,3 +1,322 @@
+ERP/
+├── backend/
+│   ├── config/
+│   │   ├── cloudinary.js
+│   │   ├── db.js
+│   │   └── permissions.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── branchController.js
+│   │   ├── categoryController.js
+│   │   ├── counterController.js
+│   │   ├── dashboardController.js
+│   │   ├── dispatchController.js
+│   │   ├── employeeController.js
+│   │   ├── factoryController.js
+│   │   ├── inventoryController.js
+│   │   ├── productController.js
+│   │   ├── salesController.js
+│   │   ├── stockController.js
+│   │   ├── stockTransactionController.js
+│   │   └── userController.js
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   ├── authorize.js
+│   │   ├── errorMiddleware.js
+│   │   ├── multer.js
+│   │   ├── permissionMiddleware.js
+│   │   ├── uploadMiddleware.js
+│   │   └── validationMiddleware.js
+│   ├── models/
+│   │   ├── Branch.js
+│   │   ├── Category.js
+│   │   ├── Counter.js
+│   │   ├── Dispatch.js
+│   │   ├── Employees.js
+│   │   ├── Factory.js
+│   │   ├── Inventory.js
+│   │   ├── Product.js
+│   │   ├── StockTransaction.js
+│   │   └── User.js
+│   ├── node_modules/
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── branchRoutes.js
+│   │   ├── categoryRoutes.js
+│   │   ├── counterRoutes.js
+│   │   ├── dashboardRoutes.js
+│   │   ├── dispatchRoutes.js
+│   │   ├── employeeRoutes.js
+│   │   ├── factoryRoutes.js
+│   │   ├── inventoryRoutes.js
+│   │   ├── productRoutes.js
+│   │   ├── stockTransactionRoutes.js
+│   │   └── userRoutes.js
+│   ├── services/
+│   │   ├── authService.js
+│   │   ├── categoryService.js
+│   │   ├── dashboardService.js
+│   │   ├── dispatchService.js
+│   │   ├── employeeService.js
+│   │   ├── inventoryService.js
+│   │   ├── productImagesService.js
+│   │   ├── productService.js
+│   │   └── userService.js
+|   |   |__ stockTransactionService.js
+│   ├── uploads/
+│   ├── utils/
+│   │   ├── ApiResponse.js
+│   │   ├── asyncHandler.js
+│   │   ├── generateDispatchNumber.js
+│   │   ├── generateEmployeeCode.js
+│   │   ├── generateInvoiceNumber.js
+│   │   ├── generatePurchaseNumber.js
+│   │   └── generateSalesNumber.js
+│   ├── validations/
+│   │   ├── authValidation.js
+│   │   ├── categoryValidation.js
+│   │   ├── dispatchValidation.js
+│   │   ├── productValidation.js
+│   │   └── userValidation.js
+│   ├── .env
+│   ├── .gitignore
+│   ├── index.js
+│   ├── package-lock.json
+│   └── package.json
+│
+├── frontend/
+│   ├── node_modules/
+│   ├── public/
+│   └── src/
+│       ├── api/
+│       │   └── axiosInstance.js
+│       ├── app/
+│       │   ├── axios.js
+│       │   └── store.js
+│       ├── assets/
+│       │   ├── hero.png
+│       │   ├── react.svg
+│       │   └── vite.svg
+│       ├── components/
+│       │   ├── categories/
+│       │   │   ├── CategoryAction.jsx
+│       │   │   ├── CategoryDialog.jsx
+│       │   │   ├── CategoryFilters.jsx
+│       │   │   ├── CategoryForm.jsx
+│       │   │   └── CategoryTable.jsx
+│       │   ├── common/
+│       │   │   ├── DataTable.jsx
+│       │   │   ├── PageContainer.jsx
+│       │   │   ├── PageHeader.jsx
+│       │   │   ├── SearchBar.jsx
+│       │   │   ├── Sidebar.jsx
+│       │   │   └── Topbar.jsx
+│       │   ├── dashboard/
+│       │   │   ├──│   ├── ActivityTimeline.jsx
+│       │   │   ├── BranchAdminDashboard.jsx
+│       │   │   ├── Dashboard.jsx
+│       │   │   ├── FactoryAdminDashboard.jsx
+│       │   │   ├── InventoryChart.jsx
+│       │   │   ├── InventoryStatus.jsx
+│       │   │   ├── LowStockProducts.jsx
+│       │   │   ├── QuickAction.jsx
+│       │   │   └── SuperAdminDashboard.jsx
+│       │   ├── dispatch/
+│       │   │   ├── DispatchTable.jsx
+│       │   │   └── DispatchTimeline.jsx
+│       │   ├── employees/
+│       │   │   └── Employees.jsx
+│       │   ├── factories/
+│       │   │   ├── FactoryDeleteDialog.jsx
+│       │   │   ├── FactoryDialog.jsx
+│       │   │   ├── FactoryTable.jsx
+│       │   │   └── FactoryToolbar.jsx
+│       │   ├── inventory/
+│       │   │   ├── InventoryList.jsx
+│       │   │   ├── InventoryTable.jsx
+│       │   │   ├── InventoryToolbar.jsx
+│       │   │   ├── StockAdjustmentDialog.jsx
+│       │   │   ├── StockHistoryDialog.jsx
+│       │   │   ├── StockHistoryTable.jsx
+│       │   │   └── StockTransactionDialog.jsx
+│       │   ├── layouts/
+│       │   │   ├── AppLayout.jsx
+│       │   │   ├── BranchLayout.jsx
+│       │   │   ├── FactoryLayout.jsx
+│       │   │   └── SuperAdminLayout.jsx
+│       │   ├── products/
+│       │   │   ├── AdjustStockDialog.jsx
+│       │   │   ├── ProductBasicTab.jsx
+│       │   │   ├── ProductDeleteDialog.jsx
+│       │   │   ├── ProductDialog.jsx
+│       │   │   ├── ProductImageUpload.jsx
+│       │   │   ├── ProductInventoryTab.jsx
+│       │   │   ├── ProductPricingTab.jsx
+│       │   │   ├── ProductTable.jsx
+│       │   │   ├── ProductTaxTab.jsx
+│       │   │   └── ProductToolbar.jsx
+│       │   ├── purchase/
+│       │   ├── reports/
+│       │   │   └── Reports.jsx
+│       │   ├── sales/
+│       │   │   ├── Sales.jsx
+│       │   │   ├── SalesDetailsDialog.jsx
+│       │   │   ├── SalesDialog.jsx
+│       │   │   ├── SalesTable.jsx
+│       │   │   └── SalesToolbar.jsx
+|       |   |
+│       │   ├── ui/
+│       │   │   ├── avatars/
+│       │   │   │   └── UserAvatar.jsx
+│       │   │   ├── buttons/
+│       │   │   │   ├── PrimaryButton.jsx
+│       │   │   │   └── SecondaryButton.jsx
+│       │   │   ├── cards/
+│       │   │   │   ├── PageCard.jsx
+│       │   │   │   └── StatCard.jsx
+│       │   │   ├── charts/
+│       │   │   │   ├── DoughnutChart.jsx
+│       │   │   │   └── LineChart.jsx
+│       │   │   └── chips/
+│       │   │       └── StatusChip.jsx   
+│       │   │   ├── dialogs/
+│       │   │   │   └── FormDialog.jsx
+│       │   │   ├── feedback/
+│       │   │   │   ├── ConfirmDialog.jsx
+│       │   │   │   ├── EmptyState.jsx
+│       │   │   │   └── Loader.jsx
+│       │   │   ├── inputs/
+│       │   │   │   ├── SelectInput.jsx
+│       │   │   │   └── TextInput.jsx
+│       │   │   └── tables/
+│       │   │       └── DataTable.jsx
+|       |   |   
+│       ├── config/
+│       │   └── permssions.js
+│       ├── features/
+|       |     |__________auth
+                           |__authApi.js
+                           |__authSlice.js
+
+
+|       |      branch
+|       |         |________branchApi.js
+|       |         |________branchSlice.js
+|       |         |________branchThunk.js
+
+|       |      category
+                  |___categoryApi.js
+                  |___categorySlice.js
+
+                counter
+                   |____counterApi.js
+                   |____counterSlice.js
+                   |____counterThunk.js
+
+               dashboard
+                  |_____dashboardApi.js
+                  |_____dashboardSlice.js
+               employee
+                   |___employeeApi.js
+                   |___employeeSlice.js
+                   |___employeeThunk.js
+
+                factory
+                   |______factoryApi.js
+                    |______factorySlice.js
+                     |______factoryThunk.js
+
+                products
+                   |______productApi.js
+                    |______productSlice.js
+
+                 user
+                   |______useApi.js
+                    |______userSlice.js
+                     |______userThunk.js
+                hooks
+                  |_____userPermission.js
+│       ├── pages/
+│       │   └── auth/
+│       │       ├── Login.jsx
+│       │       ├── Register.jsx
+            branches/
+│       │       ├── Register.jsx
+            category/
+│       │       ├── Category.jsx
+
+
+
+              dashboard
+                 |________BranchAdminDashboard.jsx
+                   |________DashboardHome.jsx
+                     |________FactoryAdminDashboard.jsx
+                       |________InventoryStatus.jsx
+                         |________SalesDashboard.jsx
+                           |________SuperAdminDashboard.jsx
+                             |________SupportDashboard.jsx
+
+
+                    dispatch
+                    employees
+                        |________Employees.jsx
+                    factories
+                          |________factories.jsx
+                    inventory
+                           |________Inventory.jsx
+                    products
+                          |________Products.jsx
+                            |________ProductsDeleteDialog.jsx
+                              |________ProductDialog.jsx
+                                |________ProductTable.jsx
+                                  |________ProductToolBar.jsx
+                    purchase
+                    reports
+                        |________Reports.jsx
+                    sales
+                         |________Sales.jsx
+                    settings
+                         |________Settings.jsx
+                    superAdmin
+                          |________SuperAdminDashboard.jsx
+                    users
+                          |________Users.jsx
+
+                     
+│       ├── routes/
+│       │   └── ProtectedRoute.jsx
+│       ├── services/
+│       │   └── categoryApi.js
+│       ├── theme/
+│       │   └── theme.js
+│       ├── utils/
+│       │   ├── auth.js
+│       │   ├── hasPermission.js
+│       │   └── roleRedirect.js
+│       ├── App.css
+│       ├── App.jsx
+│       ├── index.css
+│       └── main.jsx
+│
+├── shared/
+│   ├── constants.js
+│   ├── permissions.js
+│   └── roles.js
+│
+├── .gitignore
+├── .oxlintrc.json
+├── index.html
+├── package-lock.json
+├── package.json
+├── vite.config.js
+└── README.md
+
+├── shared/
+│   ├── constants.js
+│   ├── permissions.js
+│   └── roles.js
+
+
 # ERP-Portal
 # ERP System - Frontend & Backend Architecture
 

@@ -46,35 +46,35 @@ router.post(
 router.get(
   "/",
   protect,
-  authorize("super_admin"),
+  authorize("super_admin","hr_manager"),
   getAllUsers
 );
 
 router.get(
   "/:id",
   protect,
-  authorize("super_admin"),
+  authorize("super_admin","hr_manager"),
   getUserById
 );
 
 router.put(
   "/:id",
   protect,
-  authorize("super_admin"),
+  authorize("super_admin","hr_manager"),
   updateUser
 );
 
 router.patch(
   "/:id/status",
   protect,
-  authorize("super_admin"),
+  authorize("super_admin","hr_manager"),
   updateUserStatus
 );
 
 router.delete(
   "/:id",
   protect,
-  authorize("super_admin"),
+  authorize("super_admin","hr_manager"),
   deleteUser
 );
 

@@ -1,69 +1,326 @@
+// const jwt = require("jsonwebtoken");
+// const User = require("../models/User");
+
+// // Protect Routes
+// const protect = async (req, res, next) => {
+//   try {
+//     let token;
+
+//     if (
+//       req.headers.authorization &&
+//       req.headers.authorization.startsWith("Bearer ")
+//     ) {
+//       token = req.headers.authorization.split(" ")[1];
+//     }
+
+//     if (!token) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Not authorized. No token provided.",
+//       });
+//     }
+
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     req.user = await User.findById(decoded.id)
+//       .select("-password")
+//       .populate("factory", "factoryName factoryCode")
+//       .populate("branch", "branchName branchCode")
+//       .populate("counter", "counterName counterCode");
+
+//     if (!req.user) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "User not found.",
+//       });
+//     }
+
+//     if (!req.user.isActive) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Your account has been deactivated.",
+//       });
+//     }
+
+//     next();
+//   } catch (error) {
+//     return res.status(401).json({
+//       success: false,
+//       message: "Invalid or expired token.",
+//     });
+//   }
+// };
+
+// // Role Authorization
+// const authorize = (...roles) => {
+//   return (req, res, next) => {
+//     if (!req.user || !roles.includes(req.user.role)) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Access denied.",
+//       });
+//     }
+
+//     next();
+//   };
+// };
+
+// module.exports = {
+//   protect,
+//   authorize,
+// };
+
+
+
+// const jwt = require("jsonwebtoken");
+// const User = require("../models/User");
+
+// // Protect Routes
+// const protect = async (req,res,next)=>{
+
+// try{
+
+// let token;
+
+// if(
+// req.headers.authorization &&
+// req.headers.authorization.startsWith("Bearer ")
+// ){
+//  token=req.headers.authorization.split(" ")[1];
+// }
+
+
+// if(!token){
+//  return res.status(401).json({
+//  success:false,
+//  message:"Not authorized. No token provided."
+//  });
+// }
+
+
+// const decoded=jwt.verify(
+//  token,
+//  process.env.JWT_SECRET
+// );
+
+
+// if(!decoded.id){
+//  return res.status(401).json({
+//  success:false,
+//  message:"Invalid token payload."
+//  });
+// }
+
+
+// req.user=await User.findById(decoded.id)
+// .select("-password")
+// .populate("factory","factoryName factoryCode")
+// .populate("branch","branchName branchCode")
+// .populate("counter","counterName counterCode");
+
+
+// if(!req.user){
+//  return res.status(401).json({
+//  success:false,
+//  message:"User not found."
+//  });
+// }
+
+
+// if(!req.user.isActive){
+//  return res.status(401).json({
+//  success:false,
+//  message:"Your account has been deactivated."
+//  });
+// }
+
+
+// next();
+
+
+// }catch(error){
+
+// return res.status(401).json({
+// success:false,
+// message:"Invalid or expired token."
+// });
+
+// }
+
+// };
+// // Role Authorization
+// const authorize = (...roles) => {
+//   return (req, res, next) => {
+//     if (!req.user || !roles.includes(req.user.role)) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Access denied.",
+//       });
+//     }
+
+//     next();
+//   };
+// };
+
+// module.exports = {
+//   protect,
+//   authorize,
+// };
+
+
+//////////-------------------
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+
 // Protect Routes
+
 const protect = async (req, res, next) => {
+
   try {
+
     let token;
+
+
+    // Get token from header
 
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer ")
     ) {
+
       token = req.headers.authorization.split(" ")[1];
+
     }
+
+
 
     if (!token) {
+
       return res.status(401).json({
-        success: false,
-        message: "Not authorized. No token provided.",
+
+        success:false,
+        message:"Not authorized. No token provided."
+
       });
+
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = await User.findById(decoded.id)
+
+    // Verify token
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+
+
+    // Find user
+
+    const user = await User.findById(decoded.id)
       .select("-password")
-      .populate("factory", "factoryName factoryCode")
-      .populate("branch", "branchName branchCode")
-      .populate("counter", "counterName counterCode");
+      .populate(
+        "factory",
+        "factoryName factoryCode"
+      )
+      .populate(
+        "branch",
+        "branchName branchCode"
+      )
+      .populate(
+        "counter",
+        "counterName counterCode"
+      );
 
-    if (!req.user) {
+
+
+    if (!user) {
+
       return res.status(401).json({
-        success: false,
-        message: "User not found.",
+
+        success:false,
+        message:"User not found."
+
       });
+
     }
 
-    if (!req.user.isActive) {
+
+
+    if (!user.isActive) {
+
       return res.status(401).json({
-        success: false,
-        message: "Your account has been deactivated.",
+
+        success:false,
+        message:"Account is inactive."
+
       });
+
     }
+
+
+
+    // Attach user
+
+    req.user = user;
+
 
     next();
-  } catch (error) {
+
+
+
+  } catch(error) {
+
+
     return res.status(401).json({
-      success: false,
-      message: "Invalid or expired token.",
+
+      success:false,
+      message:"Invalid or expired token."
+
     });
+
+
   }
+
 };
+
+
+
+
 
 // Role Authorization
+
 const authorize = (...roles) => {
-  return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.role)) {
+
+  return (req,res,next)=>{
+
+
+    if(
+      !req.user ||
+      !roles.includes(req.user.role)
+    ){
+
       return res.status(403).json({
-        success: false,
-        message: "Access denied.",
+
+        success:false,
+        message:"Access denied."
+
       });
+
     }
 
+
+
     next();
+
+
   };
+
 };
+
+
 
 module.exports = {
   protect,

@@ -15,11 +15,17 @@ export const fetchFactories = createAsyncThunk(
   "factory/fetchFactories",
   async (_, thunkAPI) => {
     try {
-      return await getFactories();
+      const response = await getFactories();
+
+      console.log("Factory Response:", response);
+
+      return response;
     } catch (error) {
+      console.log("Factory Error:", error.response);
+
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch factories"
+        "Failed to fetch factories"
       );
     }
   }

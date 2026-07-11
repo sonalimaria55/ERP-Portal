@@ -4,33 +4,48 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  DialogContentText,
   DialogActions,
   Button,
 } from "@mui/material";
 
-
-const UserDeleteDialog = ({
+const EmployeeDeleteDialog = ({
   open,
   onClose,
-  user,
-  onDelete,
+  onConfirm,
+  employee,
 }) => {
-
   return (
     <Dialog
       open={open}
       onClose={onClose}
+      maxWidth="xs"
+      fullWidth
     >
-
       <DialogTitle>
-        Delete User
+        Delete Employee
       </DialogTitle>
 
-
       <DialogContent>
-        Are you sure you want to delete {user?.name}?
-      </DialogContent>
 
+        <DialogContentText>
+
+          Are you sure you want to delete
+
+          <strong>
+            {" "}
+            {employee?.name}
+          </strong>
+
+          ?
+
+          <br />
+
+          This action cannot be undone.
+
+        </DialogContentText>
+
+      </DialogContent>
 
       <DialogActions>
 
@@ -38,22 +53,17 @@ const UserDeleteDialog = ({
           Cancel
         </Button>
 
-
         <Button
           color="error"
           variant="contained"
-          onClick={() => onDelete(user._id)}
+          onClick={onConfirm}
         >
           Delete
         </Button>
 
       </DialogActions>
-
-
     </Dialog>
   );
-
 };
 
-
-export default UserDeleteDialog;
+export default EmployeeDeleteDialog;
