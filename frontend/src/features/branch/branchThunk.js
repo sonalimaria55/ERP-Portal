@@ -2,111 +2,178 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
   getBranches,
-  getBranchesByFactory,
   getBranchById,
+  getBranchesByFactory,
   createBranch,
   updateBranch,
   deleteBranch,
 } from "./branchApi";
 
-// Get All Branches
+
+
+// Fetch All Branches
 export const fetchBranches = createAsyncThunk(
   "branch/fetchBranches",
   async (_, thunkAPI) => {
+
     try {
-      return await getBranches();
+
+      const response = await getBranches();
+
+      return response.branches;
+
     } catch (error) {
+
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-        "Failed to fetch branches"
+        error.message
       );
+
     }
+
   }
 );
 
-// Get Branches By Factory
-export const fetchBranchesByFactory = createAsyncThunk(
-  "branch/fetchBranchesByFactory",
-  async (factoryId, thunkAPI) => {
-    try {
-      return await getBranchesByFactory(factoryId);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message ||
-        "Failed to fetch branches"
-      );
-    }
-  }
-);
 
-// Get Branch By Id
+
+
+// Fetch Branch By Id
 export const fetchBranchById = createAsyncThunk(
   "branch/fetchBranchById",
   async (id, thunkAPI) => {
+
     try {
-      return await getBranchById(id);
+
+      const response = await getBranchById(id);
+
+      return response.branch;
+
     } catch (error) {
+
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-        "Failed to fetch branch"
+        error.message
       );
+
     }
+
   }
 );
 
-// Create Branch
-export const createNewBranch = createAsyncThunk(
-  "branch/createNewBranch",
-  async (data, thunkAPI) => {
+
+
+
+// Fetch Branches By Factory
+export const fetchBranchesByFactory = createAsyncThunk(
+  "branch/fetchBranchesByFactory",
+  async (factoryId, thunkAPI) => {
+
     try {
-      const response = await createBranch(data);
 
-      thunkAPI.dispatch(fetchBranches());
+      const response =
+        await getBranchesByFactory(factoryId);
 
-      return response;
+      return response.branches;
+
     } catch (error) {
+
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-        "Failed to create branch"
+        error.message
       );
+
     }
+
   }
 );
 
-// Update Branch
-export const updateExistingBranch = createAsyncThunk(
-  "branch/updateExistingBranch",
-  async ({ id, data }, thunkAPI) => {
+
+
+
+
+// Add Branch
+export const addBranch = createAsyncThunk(
+  "branch/addBranch",
+  async (branchData, thunkAPI) => {
+
     try {
-      const response = await updateBranch(id, data);
 
-      thunkAPI.dispatch(fetchBranches());
+      const response =
+        await createBranch(branchData);
 
-      return response;
+      return response.branch;
+
     } catch (error) {
+
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-        "Failed to update branch"
+        error.message
       );
+
     }
+
   }
 );
 
-// Delete Branch
+
+
+
+
+// Edit Branch
+export const editBranch = createAsyncThunk(
+  "branch/editBranch",
+  async (
+    { id, branchData },
+    thunkAPI
+  ) => {
+
+    try {
+
+      const response =
+        await updateBranch(
+          id,
+          branchData
+        );
+
+      return response.branch;
+
+
+    } catch (error) {
+
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+        error.message
+      );
+
+    }
+
+  }
+);
+
+
+
+
+
+// Remove Branch
 export const removeBranch = createAsyncThunk(
   "branch/removeBranch",
   async (id, thunkAPI) => {
+
     try {
+
       await deleteBranch(id);
 
-      thunkAPI.dispatch(fetchBranches());
-
       return id;
+
+
     } catch (error) {
+
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-        "Failed to delete branch"
+        error.message
       );
+
     }
+
   }
 );

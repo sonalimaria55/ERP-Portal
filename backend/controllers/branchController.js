@@ -184,47 +184,11 @@ const Branch = require("../models/Branch");
 const Factory = require("../models/Factory");
 // Create Branch
 const createBranch = async (req, res) => {
+
   try {
+
     const {
-       factory,
-       branchName,
-        branchCode,
-         manager,
-         email,
-         phone,
-         address,
-   
-
-      city,
-      state,
-      pincode,
-    } = req.body;
-
-
-// Check Factory
-const factoryExists = await Factory.findById(factory);
-
-if (!factoryExists) {
-  return res.status(404).json({
-    success: false,
-    message: "Factory not found",
-  });
-}
-
-
-    // Check if branch code already exists
-    const existingBranch = await Branch.findOne({
-      $or: [{ branchName }, { branchCode }],
-    });
-
-    if (existingBranch) {
-      return res.status(400).json({
-        success: false,
-        message: "Branch name or code already exists",
-      });
-    }
-
-    const branch = await Branch.create({
+      factory,
       branchName,
       branchCode,
       manager,
@@ -233,29 +197,96 @@ if (!factoryExists) {
       address,
       city,
       state,
-      pincode,
-    });
+      pincode
+
+    } = req.body;
+
+
+    const factoryExists =
+      await Factory.findById(factory);
+
+
+    if (!factoryExists) {
+
+      return res.status(404).json({
+        success: false,
+        message: "Factory not found"
+      });
+
+    }
+
+
+
+    const existingBranch =
+      await Branch.findOne({
+        factory,
+        $or: [
+          { branchName },
+          { branchCode }
+        ]
+      });
+
+
+    if (existingBranch) {
+
+      return res.status(400).json({
+        success: false,
+        message: "Branch name or code already exists"
+      });
+
+    }
+
+
+
+    const branch =
+      await Branch.create({
+
+        factory,
+        branchName,
+        branchCode,
+        manager,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        pincode
+
+      });
+
 
     res.status(201).json({
+
       success: true,
       message: "Branch created successfully",
-      branch,
+      branch
+
     });
+
+
   } catch (error) {
+
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error.message
     });
+
   }
+
 };
 
 // Get All Branches
 const getAllBranches = async (req, res) => {
   try {
-    const branches = await Branch.find().populate(
-      "manager",
-      "name email phone"
-    );
+    const branches = await Branch.find()
+      .populate(
+        "factory",
+        "factoryName factoryCode"
+      )
+      .populate(
+        "manager",
+        "name email phone"
+      );
 
     res.status(200).json({
       success: true,
@@ -271,12 +302,20 @@ const getAllBranches = async (req, res) => {
 };
 
 // Get Single Branch
+// Get Single Branch
 const getBranchById = async (req, res) => {
   try {
-    const branch = await Branch.findById(req.params.id).populate(
-      "manager",
-      "name email phone"
-    );
+
+    const branch = await Branch.findById(req.params.id)
+      .populate(
+        "factory",
+        "factoryName factoryCode"
+      )
+      .populate(
+        "manager",
+        "name email phone"
+      );
+
 
     if (!branch) {
       return res.status(404).json({
@@ -285,18 +324,26 @@ const getBranchById = async (req, res) => {
       });
     }
 
+
     res.status(200).json({
       success: true,
       branch,
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
 
+
+  } catch (error) {
+
+  console.error("CREATE BRANCH ERROR:");
+  console.error(error);
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+    stack: error.stack,
+  });
+
+}
+};
 // Update Branch
 const updateBranch = async (req, res) => {
   try {
@@ -362,13 +409,26 @@ const getBranchesByFactory = async (req, res) => {
     const branches = await Branch.find({
       factory: req.params.factoryId,
       isActive: true,
-    }).sort({ branchName: 1 });
+    })
+    .populate(
+      "factory",
+      "factoryName factoryCode"
+    )
+    .populate(
+      "manager",
+      "name email phone"
+    )
+    .sort({
+      branchName: 1
+    });
+
 
     res.status(200).json({
       success: true,
       count: branches.length,
       branches,
     });
+
 
   } catch (error) {
 

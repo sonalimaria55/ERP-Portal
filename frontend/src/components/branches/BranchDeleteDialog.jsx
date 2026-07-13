@@ -10,51 +10,76 @@ import {
 } from "@mui/material";
 
 
-const ProductDeleteDialog = ({
+const BranchDeleteDialog = ({
   open,
   onClose,
-  onDelete,
-  product,
+  onConfirm,
+  branch,
 }) => {
 
   return (
+
     <Dialog
       open={open}
       onClose={onClose}
+      maxWidth="xs"
+      fullWidth
     >
 
+
       <DialogTitle>
-        Delete Product
+        Delete Branch
       </DialogTitle>
 
 
+
       <DialogContent>
-        Are you sure you want to delete{" "}
-        <strong>
-          {product?.productName}
-        </strong>
-        ?
+
+        <Typography>
+
+          Are you sure you want to delete{" "}
+
+          <strong>
+            {branch?.branchName}
+          </strong>
+
+          ?
+
+        </Typography>
+
+
       </DialogContent>
+
 
 
       <DialogActions>
 
-        <Button onClick={onClose}>
+
+        <Button
+          onClick={onClose}
+        >
           Cancel
         </Button>
 
 
+
         <Button
           color="error"
-          onClick={onDelete}
+          variant="contained"
+          onClick={onConfirm}
         >
           Delete
         </Button>
 
+
       </DialogActions>
 
+
     </Dialog>
+
   );
+
 };
 
-export default ProductDeleteDialog;
+
+export default BranchDeleteDialog;

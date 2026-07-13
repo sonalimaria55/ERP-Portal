@@ -2,139 +2,201 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   fetchBranches,
-  fetchBranchesByFactory,
   fetchBranchById,
-  createNewBranch,
-  updateExistingBranch,
+  fetchBranchesByFactory,
+  addBranch,
+  editBranch,
   removeBranch,
 } from "./branchThunk";
 
+
+
 const initialState = {
+
   branches: [],
-  branch: null,
+
+  selectedBranch: null,
+
   loading: false,
+
   error: null,
+
 };
 
+
+
 const branchSlice = createSlice({
+
   name: "branch",
 
   initialState,
 
+
   reducers: {
+
+
     clearSelectedBranch: (state) => {
-      state.branch = null;
+
+      state.selectedBranch = null;
+
     },
+
+
+    clearBranchError: (state) => {
+
+      state.error = null;
+
+    },
+
+
   },
+
 
   extraReducers: (builder) => {
+
+
     builder
 
-      // ==========================
-      // Fetch All Branches
-      // ==========================
-      .addCase(fetchBranches.pending, (state) => {
+
+    // Fetch All
+    .addCase(
+      fetchBranches.pending,
+      (state) => {
+
         state.loading = true;
-        state.error = null;
-      })
 
-      .addCase(fetchBranches.fulfilled, (state, action) => {
-        state.loading = false;
-        state.branches = action.payload.branches;
-      })
+      }
+    )
 
-      .addCase(fetchBranches.rejected, (state, action) => {
+
+    .addCase(
+      fetchBranches.fulfilled,
+      (state, action) => {
+
         state.loading = false;
+
+        state.branches = action.payload;
+
+      }
+    )
+
+
+    .addCase(
+      fetchBranches.rejected,
+      (state, action) => {
+
+        state.loading = false;
+
         state.error = action.payload;
-      })
 
-      // ==========================
-      // Fetch Branches By Factory
-      // ==========================
-      .addCase(fetchBranchesByFactory.pending, (state) => {
-        state.loading = true;
-      })
+      }
+    )
 
-      .addCase(fetchBranchesByFactory.fulfilled, (state, action) => {
-        state.loading = false;
-        state.branches = action.payload.branches;
-      })
 
-      .addCase(fetchBranchesByFactory.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
 
-      // ==========================
-      // Fetch Branch By Id
-      // ==========================
-      .addCase(fetchBranchById.pending, (state) => {
-        state.loading = true;
-      })
 
-      .addCase(fetchBranchById.fulfilled, (state, action) => {
-        state.loading = false;
-        state.branch = action.payload.branch;
-      })
 
-      .addCase(fetchBranchById.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+    // Fetch By Id
+    .addCase(
+      fetchBranchById.fulfilled,
+      (state, action) => {
 
-      // ==========================
-      // Create Branch
-      // ==========================
-      .addCase(createNewBranch.pending, (state) => {
-        state.loading = true;
-      })
+        state.selectedBranch =
+          action.payload;
 
-      .addCase(createNewBranch.fulfilled, (state) => {
-        state.loading = false;
-      })
+      }
+    )
 
-      .addCase(createNewBranch.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
 
-      // ==========================
-      // Update Branch
-      // ==========================
-      .addCase(updateExistingBranch.pending, (state) => {
-        state.loading = true;
-      })
 
-      .addCase(updateExistingBranch.fulfilled, (state) => {
-        state.loading = false;
-      })
 
-      .addCase(updateExistingBranch.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
 
-      // ==========================
-      // Delete Branch
-      // ==========================
-      .addCase(removeBranch.pending, (state) => {
-        state.loading = true;
-      })
+    // Fetch By Factory
+    .addCase(
+      fetchBranchesByFactory.fulfilled,
+      (state, action) => {
 
-      .addCase(removeBranch.fulfilled, (state) => {
-        state.loading = false;
-      })
+        state.branches =
+          action.payload;
 
-      .addCase(removeBranch.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+      }
+    )
+
+
+
+
+
+    // Create
+    .addCase(
+      addBranch.fulfilled,
+      (state, action) => {
+
+        state.branches.push(
+          action.payload
+        );
+
+      }
+    )
+
+
+
+
+
+    // Update
+    .addCase(
+      editBranch.fulfilled,
+      (state, action) => {
+
+
+        const index =
+          state.branches.findIndex(
+            (branch) =>
+              branch._id === action.payload._id
+          );
+
+
+        if(index !== -1){
+
+          state.branches[index] =
+            action.payload;
+
+        }
+
+
+      }
+    )
+
+
+
+
+
+    // Delete
+    .addCase(
+      removeBranch.fulfilled,
+      (state, action) => {
+
+        state.branches =
+          state.branches.filter(
+            (branch) =>
+              branch._id !== action.payload
+          );
+
+      }
+    );
+
+
   },
+
+
 });
+
+
 
 export const {
   clearSelectedBranch,
+  clearBranchError,
 } = branchSlice.actions;
 
-export default branchSlice.reducer;
 
+
+export default branchSlice.reducer;

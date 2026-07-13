@@ -15,40 +15,50 @@ const {
   authorize,
 } = require("../middleware/authMiddleware");
 
-// Only Super Admin can manage factories
+
 
 router.post(
   "/",
   protect,
-  authorize("super_admin"),
+  authorize(  "super_admin",
+    "factory_admin",
+    "management_support"),
   createFactory
 );
 
 router.get(
   "/",
   protect,
-  authorize("super_admin"),
+  authorize(  "super_admin",
+    "factory_admin",
+    "management_support"),
   getAllFactories
 );
 
 router.get(
   "/:id",
   protect,
-  authorize("super_admin"),
+  authorize(  "super_admin",
+    "factory_admin",
+    "management_support"),
   getFactoryById
 );
 
 router.put(
   "/:id",
   protect,
-  authorize("super_admin"),
+  authorize(  "super_admin",
+    "factory_admin",
+    "management_support"),
   updateFactory
 );
 
 router.delete(
   "/:id",
   protect,
-  authorize("super_admin"),
+  authorize(  "super_admin",
+    "factory_admin",
+    "management_support"),
   deleteFactory
 );
 

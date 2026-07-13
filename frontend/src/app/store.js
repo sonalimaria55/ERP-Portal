@@ -11,6 +11,8 @@ import factoryReducer from "../features/factory/factorySlice";
 import branchReducer from "../features/branch/branchSlice";
 import counterReducer from "../features/counter/counterSlice";
 import employeeReducer from "../features/employee/employeeSlice";
+import purchaseReducer from "../features/purchase/purchaseSlice";
+import supplierReducer from "../features/supplier/supplierSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -26,6 +28,9 @@ export const store = configureStore({
     branch: branchReducer,
     counter: counterReducer,
      employee: employeeReducer,
+     purchase: purchaseReducer,
+     supplier: supplierReducer,
+     
   },
 });
 

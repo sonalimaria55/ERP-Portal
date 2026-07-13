@@ -4,6 +4,7 @@ import {
     Chip,
     IconButton,
     Tooltip,
+    Avatar,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -25,23 +26,27 @@ const ProductTable = ({
             headerName: "Image",
             width: 90,
             sortable: false,
-            renderCell: (params) => (
-                <Box
-                    component="img"
-                    src={
-                        params.row.images?.[0]?.url ||
-                        "https://via.placeholder.com/40"
-                    }
-                    alt={params.row.productName}
-                    sx={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: 1,
-                        objectFit: "cover",
-                        mt: 0.5,
-                    }}
-                />
-            ),
+            renderCell: (params) => {
+
+                const image =
+                    params.row.images?.[0]?.url;
+
+                return (
+                    <Avatar
+                        src={image || undefined}
+                        variant="rounded"
+                        sx={{
+                            width: 40,
+                            height: 40,
+                            mt: 0.5,
+                        }}
+                    >
+                        {params.row.productName
+                            ?.charAt(0)
+                            ?.toUpperCase()}
+                    </Avatar>
+                );
+            },
         },
         {
             field: "sku",

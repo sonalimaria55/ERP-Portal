@@ -21,6 +21,25 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const stockTransactionRoutes = require("./routes/stockTransactionRoutes");
 const factoryRoutes = require("./routes/factoryRoutes");
 const counterRoutes = require("./routes/counterRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
+const brandRoutes = require("./routes/brandRoutes");
+const purchaseRoutes = require("./routes/purchaseRoutes");
+const supplierRoutes = require("./routes/supplierRoutes");
+
+const internalCustomerRoutes =require("./routes/internalCustomerRoutes");
+const internalSupplierRoutes =require("./routes/internalSupplierRoutes");
+const internalTransferRoutes =require("./routes/internalTransferRoutes");
+const stockLedgerRoutes =require("./routes/stockLedgerRoutes");
+const salesOrderRoutes =require("./routes/salesOrderRoutes");
+const invoiceRoutes =require("./routes/invoiceRoutes");
+const customerRoutes =require("./routes/customerRoutes");
+const paymentRoutes=require("./routes/paymentRoutes");
+
+const posRoutes =require("./routes/posRoutes");
+const salesReturnRoutes =require("./routes/salesReturnRoutes");
+const goodsReceiptRoutes =require("./routes/goodsReceiptRoutes");
+
+
 // Connect Database
 connectDB();
 
@@ -70,6 +89,26 @@ app.use("/api/dashboard",dashboardRoutes);
 
 app.use("/api/factories", factoryRoutes);
 app.use("/api/counters", counterRoutes);
+
+app.use("/api/employees", employeeRoutes);
+
+
+app.use("/api/brands",brandRoutes);
+app.use("/api/suppliers", supplierRoutes);
+
+app.use("/api/purchases", purchaseRoutes);
+app.use("/api/internal-customers",internalCustomerRoutes);
+
+app.use("/api/internal-suppliers",internalSupplierRoutes);
+app.use("/api/internal-transfers",internalTransferRoutes);
+app.use("/api/stock-ledger",stockLedgerRoutes);
+app.use("/api/sales-orders",salesOrderRoutes);
+app.use("/api/invoices",invoiceRoutes);
+app.use("/api/payments",paymentRoutes);
+app.use("/api/customers",customerRoutes);
+app.use("/api/pos",posRoutes);
+app.use("/api/sales-returns",salesReturnRoutes);
+app.use("/api/goods-receipts",goodsReceiptRoutes);
 
 // ===============================
 // 404 Handler

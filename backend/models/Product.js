@@ -41,22 +41,15 @@ const productSchema = new mongoose.Schema(
         },
 
         brand: {
-            type: String,
-            trim: true,
-            default: "",
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Brand",
+            default: null,
         },
 
         unit: {
-            type: String,
-            enum: [
-                "Piece",
-                "Box",
-                "Kg",
-                "Gram",
-                "Litre",
-                "Packet",
-            ],
-            default: "Piece",
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Unit",
+            required: true,
         },
 
         description: {
@@ -77,11 +70,10 @@ const productSchema = new mongoose.Schema(
             min: 0,
         },
 
-        gst: {
-            type: Number,
-            default: 18,
-            min: 0,
-            max: 100,
+      
+        tax: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Tax",
         },
 
         discount: {
@@ -176,8 +168,7 @@ const productSchema = new mongoose.Schema(
 // Database Indexes
 // productSchema.index({ productCode: 1 });
 productSchema.index({ productName: 1 });
-// productSchema.index({ sku: 1 });
-// productSchema.index({ barcode: 1 });
+
 productSchema.index({ category: 1 });
 productSchema.index({ status: 1 });
 productSchema.index({ isDeleted: 1 });

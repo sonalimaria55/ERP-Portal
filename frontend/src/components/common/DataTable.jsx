@@ -12,8 +12,8 @@ import {
 
 
 const DataTable = ({
-  columns,
-  rows,
+  columns = [],
+  rows = [],
   renderActions,
 }) => {
 
@@ -30,15 +30,11 @@ const DataTable = ({
 
       <Table>
 
-
         {/* Header */}
-
         <TableHead>
-
           <TableRow>
 
             {columns.map((column) => (
-
               <TableCell
                 key={column.field}
                 sx={{
@@ -49,73 +45,93 @@ const DataTable = ({
               >
                 {column.header}
               </TableCell>
-
             ))}
 
 
             {renderActions && (
-
               <TableCell
                 sx={{
-                  fontWeight:700,
-                  background:"#F8F7F4",
-                  color:"#1E1E1E",
+                  fontWeight: 700,
+                  background: "#F8F7F4",
+                  color: "#1E1E1E",
                 }}
               >
                 Actions
               </TableCell>
-
             )}
 
           </TableRow>
-
         </TableHead>
 
 
-
         {/* Body */}
-
         <TableBody>
 
-          {(rows || []).map((row) => (
-            
+          {rows.length === 0 ? (
 
-            <TableRow
-              key={row._id}
-              hover
-            >
-
-              {columns.map((column) => (
-
-                <TableCell
-                  key={column.field}
-                >
-                  {row[column.field]}
-                </TableCell>
-
-              ))}
-
-
-
-              {renderActions && (
-
-                <TableCell>
-                  {renderActions(row)}
-                </TableCell>
-
-              )}
-
-
+            <TableRow>
+              <TableCell
+                colSpan={
+                  columns.length + (renderActions ? 1 : 0)
+                }
+                align="center"
+              >
+                No records found
+              </TableCell>
             </TableRow>
 
-          ))}
+          ) : (
 
+            rows.map((row) => (
+
+              <TableRow
+                key={row._id}
+                hover
+              >
+
+                {columns.map((column) => {
+
+                  let value;
+
+                  if (column.renderCell) {
+                    value = column.renderCell(row);
+                  } else {
+                    value = row[column.field];
+                  }
+
+
+                  return (
+                    <TableCell
+                      key={column.field}
+                    >
+                      {
+                        React.isValidElement(value)
+                          ? value
+                          : value ?? "-"
+                      }
+                    </TableCell>
+                  );
+
+                })}
+
+
+                {renderActions && (
+                  <TableCell>
+                    {renderActions(row)}
+                  </TableCell>
+                )}
+
+
+              </TableRow>
+
+            ))
+
+          )}
 
         </TableBody>
 
 
       </Table>
-
 
     </TableContainer>
   );

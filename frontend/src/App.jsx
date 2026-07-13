@@ -137,9 +137,606 @@
 // }
 
 // export default App;
+
+
+//-----------------------------------------------------------------------------------------------------------------
+// import { Routes, Route, Navigate } from "react-router-dom";
+
+// import Login from "./pages/auth/Login";
+
+// import AppLayout from "./components/layouts/AppLayout";
+// import ProtectedRoute from "./routes/ProtectedRoute";
+
+// import Dashboard from "./pages/dashboard/DashboardHome";
+
+// import Categories from "./pages/categories/Categories";
+// import Product from "./pages/products/Product";
+
+// import Inventory from "./pages/inventory/Inventory";
+// import Dispatch from "./pages/dispatch/Dispatch";
+// import Sales from "./pages/sales/Sales";
+
+// import Users from "./pages/users/Users";
+// import Branches from "./pages/branches/Branches";
+
+// import Reports from "./pages/reports/Reports";
+// import Settings from "./pages/settings/Settings";
+// import Register from "./pages/auth/Register";
+
+// import Factories from "./pages/factories/Factories";
+// import Employees from "./pages/employees/Employees";
+
+// function App() {
+
+
+//   return (
+
+//     <Routes>
+
+
+//       {/* Default redirect */}
+
+//       <Route
+//         path="/"
+//         element={
+//           <Navigate
+//             to="/login"
+//             replace
+//           />
+//         }
+//       />
+
+
+
+//       {/* Login */}
+
+//       <Route
+//         path="/login"
+//         element={
+//           <Login />
+//         }
+//       />
+//       {/* Register */}
+
+//       <Route
+//         path="/register"
+//         element={
+//           <Register />
+//         }
+//       />
+
+
+
+
+//       {/* ERP Application */}
+
+//       <Route
+//         path="/app"
+//         element={
+//           <ProtectedRoute>
+
+//             <AppLayout />
+
+//           </ProtectedRoute>
+//         }
+//       >
+
+
+
+//         {/* Dashboard */}
+//         <Route
+//           index
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//                 "purchase_manager",
+//                 "sales_person",
+//                 "online_manager",
+//                 "accounts_manager",
+//                 "delivery_manager",
+//                 "customer_support",
+//               ]}
+//             >
+//               <Dashboard />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Products */}
+//         <Route
+//           path="products"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "sales_person",
+//                 "warehouse_manager",
+//                 "online_manager",
+//               ]}
+//             >
+//               <Product />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Categories */}
+
+//         <Route
+//           path="categories"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//                 "branch_admin",
+//               ]}
+//             >
+//               <Categories />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+//         {/* Inventory */}
+//         <Route
+//           path="inventory"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//               ]}
+//             >
+//               <Inventory />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Sales */}
+
+//         <Route
+//           path="sales"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "branch_admin",
+//                 "sales_person",
+//                 "online_manager",
+//               ]}
+//             >
+//               <Sales />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Dispatch */}
+//         <Route
+//           path="dispatch"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//                 "delivery_manager",
+//               ]}
+//             >
+//               <Dispatch />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Users */}
+//         <Route
+//           path="users"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//                 "branch_admin",
+//               ]}
+//             >
+//               <Users />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         <Route
+//           path="factories"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//               ]}
+//             >
+//               <Factories />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Branches */}
+//         <Route
+//           path="branches"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//               ]}
+//             >
+//               <Branches />
+//             </ProtectedRoute>
+//           }
+//         />
+// <Route path="employees" element={<Employees />} />
+
+
+//         {/* Reports */}
+
+//         <Route
+//           path="reports"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "accounts_manager",
+//               ]}
+//             >
+//               <Reports />
+//             </ProtectedRoute>
+//           }
+//         />
+
+
+
+//         {/* Settings */}
+//         <Route
+//           path="settings"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//               ]}
+//             >
+//               <Settings />
+//             </ProtectedRoute>
+//           }
+//         />
+//       </Route>  {/* CLOSE /app HERE */}
+
+//       {/* Unknown URL */}
+
+//       <Route
+//         path="*"
+//         element={
+//           <Navigate
+//             to="/login"
+//             replace
+//           />
+//         }
+//       />
+
+
+//     </Routes>
+
+//   );
+
+// }
+
+
+// export default App;
+
+//-------------------------------------------------------------------------------------------
+// import { Routes, Route, Navigate } from "react-router-dom";
+
+// import Login from "./pages/auth/Login";
+// import Register from "./pages/auth/Register";
+
+// import AppLayout from "./components/layouts/AppLayout";
+// import ProtectedRoute from "./routes/ProtectedRoute";
+
+// import Dashboard from "./pages/dashboard/DashboardHome";
+
+// import Categories from "./pages/categories/Categories";
+// import Product from "./pages/products/Product";
+// import Inventory from "./pages/inventory/Inventory";
+// import Dispatch from "./pages/dispatch/Dispatch";
+// import Sales from "./pages/sales/Sales";
+
+// import Users from "./pages/users/Users";
+// import Factories from "./pages/factories/Factories";
+// import Branches from "./pages/branches/Branches";
+// import Employees from "./pages/employees/Employees";
+
+// import Reports from "./pages/reports/Reports";
+// import Settings from "./pages/settings/Settings";
+
+// function App() {
+//   return (
+//     <Routes>
+
+//       {/* Default Redirect */}
+//       <Route
+//         path="/"
+//         element={<Navigate to="/login" replace />}
+//       />
+
+//       {/* Authentication */}
+//       <Route
+//         path="/login"
+//         element={<Login />}
+//       />
+
+//       <Route
+//         path="/register"
+//         element={<Register />}
+//       />
+
+//       {/* ERP Application */}
+//       <Route
+//         path="/app"
+//         element={
+//           <ProtectedRoute>
+//             <AppLayout />
+//           </ProtectedRoute>
+//         }
+//       >
+
+//         {/* Dashboard */}
+//         <Route
+//           index
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//                 "purchase_manager",
+//                 "sales_person",
+//                 "online_manager",
+//                 "accounts_manager",
+//                 "delivery_manager",
+//                 "customer_support",
+//               ]}
+//             >
+//               <Dashboard />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Inventory */}
+//         <Route
+//           path="inventory"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//               ]}
+//             >
+//               <Inventory />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Categories */}
+//         <Route
+//           path="categories"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//               ]}
+//             >
+//               <Categories />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Products */}
+//         <Route
+//           path="products"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//                 "sales_person",
+//                 "online_manager",
+//               ]}
+//             >
+//               <Product />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Dispatch */}
+//         <Route
+//           path="dispatch"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "warehouse_manager",
+//                 "delivery_manager",
+//               ]}
+//             >
+//               <Dispatch />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Sales */}
+//         <Route
+//           path="sales"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "branch_admin",
+//                 "sales_person",
+//                 "online_manager",
+//               ]}
+//             >
+//               <Sales />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Users */}
+//         <Route
+//           path="users"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//               ]}
+//             >
+//               <Users />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Factories */}
+//         <Route
+//           path="factories"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//               ]}
+//             >
+//               <Factories />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Branches */}
+//         <Route
+//           path="branches"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//               ]}
+//             >
+//               <Branches />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Employees */}
+//         <Route
+//           path="employees"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//               ]}
+//             >
+//               <Employees />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Reports */}
+//         <Route
+//           path="reports"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//                 "management_support",
+//                 "factory_admin",
+//                 "branch_admin",
+//                 "accounts_manager",
+//               ]}
+//             >
+//               <Reports />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//         {/* Settings */}
+//         <Route
+//           path="settings"
+//           element={
+//             <ProtectedRoute
+//               allowedRoles={[
+//                 "super_admin",
+//               ]}
+//             >
+//               <Settings />
+//             </ProtectedRoute>
+//           }
+//         />
+
+//       </Route>
+
+//       {/* Unknown Route */}
+//       <Route
+//         path="*"
+//         element={<Navigate to="/login" replace />}
+//       />
+
+//     </Routes>
+//   );
+// }
+
+// export default App;
+//----------------------------------------
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
 import AppLayout from "./components/layouts/AppLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -148,71 +745,69 @@ import Dashboard from "./pages/dashboard/DashboardHome";
 
 import Categories from "./pages/categories/Categories";
 import Product from "./pages/products/Product";
-
 import Inventory from "./pages/inventory/Inventory";
 import Dispatch from "./pages/dispatch/Dispatch";
 import Sales from "./pages/sales/Sales";
 
 import Users from "./pages/users/Users";
+import Factories from "./pages/factories/Factories";
 import Branches from "./pages/branches/Branches";
+import Employees from "./pages/employees/Employees";
 
 import Reports from "./pages/reports/Reports";
-import Settings from "./pages/settings/Settings";
-import Register from "./pages/auth/Register";
 
-import Factories from "./pages/factories/Factories";
+ import Suppliers from "./pages/suppliers/Suppliers";
+
+ import Settings from "./pages/settings/Settings";
+  import Purchase from "./pages/purchase/Purchase";
+
+const ALL_ROLES = [
+  "super_admin",
+  "management_support",
+  "factory_admin",
+  "branch_admin",
+  "sales_person",
+];
+
 
 function App() {
-
 
   return (
 
     <Routes>
 
 
-      {/* Default redirect */}
-
+      {/* Default */}
       <Route
         path="/"
         element={
-          <Navigate 
-            to="/login" 
-            replace 
-          />
+          <Navigate to="/login" replace />
         }
       />
 
 
-
-      {/* Login */}
+      {/* Auth */}
 
       <Route
         path="/login"
-        element={
-          <Login />
-        }
+        element={<Login />}
       />
-      {/* Register */}
 
-<Route
-  path="/register"
-  element={
-    <Register />
-  }
-/>
+
+      <Route
+        path="/register"
+        element={<Register />}
+      />
 
 
 
-
-      {/* ERP Application */}
+      {/* ERP */}
 
       <Route
         path="/app"
         element={
           <ProtectedRoute>
-
             <AppLayout />
-
           </ProtectedRoute>
         }
       >
@@ -220,219 +815,262 @@ function App() {
 
 
         {/* Dashboard */}
-<Route
-  index
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-        "branch_admin",
-        "warehouse_manager",
-        "purchase_manager",
-        "sales_person",
-        "online_manager",
-        "accounts_manager",
-        "delivery_manager",
-        "customer_support",
-      ]}
-    >
-      <Dashboard />
-    </ProtectedRoute>
-  }
-/>
+
+        <Route
+          index
+          element={
+            <ProtectedRoute
+              allowedRoles={ALL_ROLES}
+            >
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
 
 
-        {/* Products */}
-<Route
-  path="products"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-        "branch_admin",
-        "sales_person",
-        "warehouse_manager",
-        "online_manager",
-      ]}
-    >
-      <Product />
-    </ProtectedRoute>
-  }
-/>
+        {/* Inventory */}
+
+        <Route
+          path="inventory"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+                "branch_admin",
+              ]}
+            >
+              <Inventory />
+            </ProtectedRoute>
+          }
+        />
 
 
 
         {/* Categories */}
 
-     <Route
-  path="categories"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-        "branch_admin",
-      ]}
-    >
-      <Categories />
-    </ProtectedRoute>
-  }
-/>
+        <Route
+          path="categories"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+              ]}
+            >
+              <Categories />
+            </ProtectedRoute>
+          }
+        />
 
 
-        {/* Inventory */}
-<Route
-  path="inventory"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-        "branch_admin",
-        "warehouse_manager",
-      ]}
-    >
-      <Inventory />
-    </ProtectedRoute>
-  }
-/>
+
+        {/* Products */}
+
+        <Route
+          path="products"
+          element={
+            <ProtectedRoute
+              allowedRoles={ALL_ROLES}
+            >
+              <Product />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        {/* Dispatch */}
+
+        <Route
+          path="dispatch"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+                "branch_admin",
+              ]}
+            >
+              <Dispatch />
+            </ProtectedRoute>
+          }
+        />
 
 
 
         {/* Sales */}
 
-     <Route
-  path="sales"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "branch_admin",
-        "sales_person",
-        "online_manager",
-      ]}
-    >
-      <Sales />
-    </ProtectedRoute>
-  }
-/>
-
-
-
-        {/* Dispatch */}
-<Route
-  path="dispatch"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "branch_admin",
-        "warehouse_manager",
-        "delivery_manager",
-      ]}
-    >
-      <Dispatch />
-    </ProtectedRoute>
-  }
-/>
+        <Route
+          path="sales"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "branch_admin",
+                "sales_person",
+              ]}
+            >
+              <Sales />
+            </ProtectedRoute>
+          }
+        />
 
 
 
         {/* Users */}
-<Route
-  path="users"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-        "branch_admin",
-      ]}
-    >
-      <Users />
-    </ProtectedRoute>
-  }
-/>
 
-<Route
-  path="factories"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-      ]}
-    >
-      <Factories />
-    </ProtectedRoute>
-  }
-/>
+        <Route
+          path="users"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+              ]}
+            >
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        {/* Factories */}
+
+        <Route
+          path="factories"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+              ]}
+            >
+              <Factories />
+            </ProtectedRoute>
+          }
+        />
 
 
 
         {/* Branches */}
-<Route
-  path="branches"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-      ]}
-    >
-      <Branches />
-    </ProtectedRoute>
-  }
-/>
+
+        <Route
+          path="branches"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+              ]}
+            >
+              <Branches />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        {/* Employees */}
+
+        <Route
+          path="employees"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+                "branch_admin",
+              ]}
+            >
+              <Employees />
+            </ProtectedRoute>
+          }
+        />
 
 
 
         {/* Reports */}
 
-     <Route
-  path="reports"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-        "factory_admin",
-        "branch_admin",
-        "accounts_manager",
-      ]}
-    >
-      <Reports />
-    </ProtectedRoute>
-  }
-/>
-
+        <Route
+          path="reports"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+                "branch_admin",
+              ]}
+            >
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="suppliers"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+              ]}
+            >
+              <Suppliers />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="purchase"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+                "management_support",
+                "factory_admin",
+              ]}
+            >
+              <Purchase/>
+            </ProtectedRoute>
+          }
+        />
 
 
         {/* Settings */}
-<Route
-  path="settings"
-  element={
-    <ProtectedRoute
-      allowedRoles={[
-        "super_admin",
-      ]}
-    >
-      <Settings />
-    </ProtectedRoute>
-  }
-/>
-</Route>  {/* CLOSE /app HERE */}
 
-      {/* Unknown URL */}
+        <Route
+          path="settings"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "super_admin",
+              ]}
+            >
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+
+
+      </Route>
+
+
+
+      {/* Invalid */}
 
       <Route
         path="*"
         element={
-          <Navigate 
-            to="/login" 
-            replace 
-          />
+          <Navigate to="/login" replace />
         }
       />
 
@@ -440,7 +1078,6 @@ function App() {
     </Routes>
 
   );
-
 }
 
 

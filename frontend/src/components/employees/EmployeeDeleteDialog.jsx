@@ -27,40 +27,26 @@ const EmployeeDeleteDialog = ({
       </DialogTitle>
 
       <DialogContent>
-
         <DialogContentText>
-
           Are you sure you want to delete
-
-          <strong>
-            {" "}
-            {employee?.name}
-          </strong>
-
-          ?
-
+          <strong> {employee?.fullName}</strong>?
           <br />
-
           This action cannot be undone.
-
         </DialogContentText>
-
       </DialogContent>
 
       <DialogActions>
-
         <Button onClick={onClose}>
           Cancel
         </Button>
 
         <Button
-          color="error"
           variant="contained"
+          color="error"
           onClick={onConfirm}
         >
           Delete
         </Button>
-
       </DialogActions>
     </Dialog>
   );

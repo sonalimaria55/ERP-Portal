@@ -108,23 +108,29 @@ function Users() {
       field: "role",
       header: "Role",
     },
-    {
-      field: "isActive",
-      header: "Status",
-    },
+{
+  field: "isActive",
+  header: "Status",
+  renderCell: (row) => (
+    <span>
+      {row.isActive ? "Active" : "Inactive"}
+    </span>
+  ),
+},
   ];
 
-  const rows = (users || []).map((user) => ({
-    ...user,
+ const rows = (users || []).map((user) => ({
+  _id: user._id,
 
-    role: user.role
-      ?.replaceAll("_", " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase()),
+  name: user.name,
+  email: user.email,
+  phone: user.phone,
 
-    isActive: user.isActive
-      ? "Active"
-      : "Inactive",
-  }));
+  role: user.role
+    ?.replaceAll("_", " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase()),
+isActive: user.isActive,
+}));
 
   const renderActions = (row) => {
     const originalUser = users.find(
